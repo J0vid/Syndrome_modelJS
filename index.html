@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Base Babylon ex</title>
+    
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>
+    <!-- jquery for touch interaction -->
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="wrapper"> 
+        <div class="row row-eq-height">
+            <div class="well col-md-3">
+                <div class="gestaltContainer">
+                    <p><b>Select a syndrome</b></p>
+                    <select name="syndrome" id="syndrome">
+                        <option value="Achondroplasia_1_gestalt(1)">Achondroplasia</option>
+                        <option value="Costello Syndrome_1_gestalt">Costello Syndrome</option>
+                        <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>
+                        </select>
+                </div>
+                    <div class="slidecontainer">
+                    <p><b>Age slider</b></p>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">
+                </div>
+
+                <div class="comparisonContainer" data-display-if="input.Atlas_tabs==&#39;Gestalt&#39;">
+                    <p><b>Select a syndrome</b></p>
+                    <select name="syndromeComp" id="syndromeComp">
+                        <option value="Achondroplasia_1_gestalt(1)">Achondroplasia</option>
+                        <option value="Costello Syndrome_1_gestalt">Costello Syndrome</option>
+                        <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>    
+                    </select>
+                </div>
+
+                <div class="checkboxContainer">
+                    <p><b>Heatmap checkbox</b></p>
+                    <input type="checkbox" id="heatmapCheck" onclick="updateHeatmap()">
+                </div>
+            
+                
+            </div>
+            
+            <div id="mainWindow" class="col-md-9 mt-5">
+                <div class="container-fluid" style="max-width: 1400px;">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="Gestalts-tab" data-toggle="tab" href="#Gestalts" role="tab" aria-controls="Gestalts" aria-selected="true">Gestalts</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Comparisons-tab" data-toggle="tab" href="#Comparisons" role="tab" aria-controls="Comparisons" aria-selected="false">Comparisons</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Submitted-tab" data-toggle="tab" href="#Submitted" role="tab" aria-controls="Submitted" aria-selected="false">Submitted Face</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="About-tab" data-toggle="tab" href="#About" role="tab" aria-controls="About" aria-selected="false">About this app</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><canvas id="renderCanvas" touch-action="none"></canvas>  </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                        </div>
+                        
+            
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+ <script>
+     $.each($('a > span'), function() {
+    $(this).click(function() {
+        $('.well').html($(this).html());
+    });
+});
+ </script>
+
+   
+   
+    <script src="js/base.js"></script>
+    <script src="js/heatmap.js"></script>
+
+
+</body>
+
+   

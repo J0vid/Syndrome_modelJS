@@ -1,1 +1,1 @@
-# Syndrome_modelJS
+#Syndrome atlas in pure JS

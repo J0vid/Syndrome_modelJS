@@ -1,0 +1,86 @@
+body {background-color: #e5e5e5; }
+
+/* Navbar styling */
+.navbar {
+    opacity:.98;
+    height: 6.5vh; 
+    max-height: 60px;
+}
+
+.well {
+  background-color: #fcfcfc;
+  border-radius: 20px;
+  box-shadow: 4px 10px 10px 0 rgba(0,0,0,.1);
+}
+.control-label {color: black;}
+.irs-min, .irs-max {color: black;}
+.checkbox {color: black;}
+
+.nav {
+
+}
+  
+.nav-item > a:hover {
+    border-color: transparent;
+    color: white;
+  }
+       
+.nav-item > a {
+    background-color: transparent; 
+    color:black;
+    border-color: transparent;
+  }
+
+.nav-link.active{
+    border-radius: 20px 20px 0px 0px;
+
+}
+
+#renderCanvas{
+    border-radius: 0px 20px 20px 20px;
+    box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+img{
+  border-radius: 40px;
+}
+
+#q1{   
+    position: absolute;
+    right: 35px;
+    }
+
+#texture_help{   
+    position: absolute;
+    right: 35px;
+    }
+
+
+
+@media only screen and (max-width: 768px) {
+  /* For phones */
+#Gestalts > canvas{
+   border-radius: 20px 20px 20px 20px;
+   width: 93.5vw;
+}
+
+#Comparisons > canvas{
+   border-radius: 20px 20px 20px 20px;
+   width: 93.5vw;
+}
+
+#Submitted > canvas{
+   border-radius: 20px 20px 20px 20px;
+   width: 90.5vw;
+}
+
+.col-sm-12{
+  width: 90.5vw;
+  height: 30vh;
+  
+}
+
+}
