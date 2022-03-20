@@ -97,16 +97,38 @@ selectedSyndrome.onchange = function() {
     }
 }
 
+var selectedSyndrome2 = document.getElementById("referenceComp");
+
+selectedSyndrome2.onchange = function() {
+    for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
+        console.log(comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value))
+        comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
+    }
+
+    if(comparisonScene.getMeshByName("Achondroplasia_1_gestalt(1)") !== null){
+        comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setEnabled(true)
+        myInfluence2 = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+    }
+}
+
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var slider = document.getElementById("ageSlider");
 slider.oninput = function() {
     tmpValue = this.value
     myInfluence.influence = tmpValue/100;
+
+}
+
+// Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
+var compSlider = document.getElementById("compAgeSlider");
+compSlider.oninput = function() {
+    tmpValue = this.value
+    myInfluence2.influence = tmpValue/100;
     
     if(document.getElementById("heatmapCheck").checked) {
         updateHeatmap(tmpValue);
     } else if(document.getElementById("heatmapCheck").checked === false){
-        if(scene.getMeshByName("Achondroplasia_1_gestalt(1)") !== null){
+        if(comparisonScene.getMeshByName("Achondroplasia_1_gestalt(1)") !== null){
             //need to remove the color changes when the checkbox is unclicked
         }
     }

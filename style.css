@@ -55,6 +55,7 @@ body {background-color: #e5e5e5; }
 }
 
 #renderCanvas2{
+    margin: 0 auto;
     border-radius: 0px 20px 20px 20px;
     box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
     width: 90%;
@@ -64,7 +65,8 @@ body {background-color: #e5e5e5; }
 
 
 #mynetwork {
-    width: 60%;
+    margin: 0 auto;
+    width: 50%;
     height: 40%;
     border-radius: 20px 20px 20px 20px;
     box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);

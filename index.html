@@ -57,6 +57,9 @@
                         <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>    
                     </select>
 
+                    <p><b>Age slider</b></p>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="compAgeSlider">    
+
                     <p><b>Heatmap checkbox</b></p>
                     <input type="checkbox" id="heatmapCheck" onclick="updateHeatmap()">
                 </div>
@@ -87,6 +90,7 @@
                         
                         <div class="tab-pane fade" id="Comparisons" role="tabpanel" aria-labelledby="Comparison-tab">
                             <canvas id="renderCanvas2" touch-action="none"></canvas>  
+                            <br>
                             <br>
                             <div id="mynetwork"></div>
                         </div>
