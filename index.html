@@ -24,20 +24,22 @@
    
 </head>
 <body>
-    <div class="wrapper"> 
-        <div class="row row-eq-height">
+    
+        <div class="row m-3">
 
-            <div class="well col-md-3">
+            <div class="well col-md-3 mt-5 mx-auto">
                 <div class="gestaltContainer" id="gestaltContainer">
-                    <p><b>Select a syndrome</b></p>
-                    <select name="syndrome" id="syndrome">
-                        <option value="Achondroplasia_1_gestalt(1)">Achondroplasia</option>
-                        <option value="Costello Syndrome_1_gestalt">Costello Syndrome</option>
-                        <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>
-                        </select>
+                    <center>
+                        <p><b>Select a syndrome</b></p>
+                        <select name="syndrome" id="syndrome">
+                            <option value="Achondroplasia_1_gestalt(1)">Achondroplasia</option>
+                            <option value="Costello Syndrome_1_gestalt">Costello Syndrome</option>
+                            <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>
+                            </select>
 
-                    <p><b>Age slider</b></p>
-                    <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">    
+                        <p><b>Age slider</b></p>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">    
+                    </center>
                 </div>
                    
                 <div class="comparisonContainer" id="comparisonContainer">
@@ -58,8 +60,6 @@
                     <p><b>Heatmap checkbox</b></p>
                     <input type="checkbox" id="heatmapCheck" onclick="updateHeatmap()">
                 </div>
-
-                
             </div>
         
             
@@ -80,7 +80,7 @@
                         </li>
                     </ul>
                     
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content" id="myTabContent" class="mx-auto">
                         <div class="tab-pane fade show active" id="Gestalts" role="tabpanel" aria-labelledby="Gestalts-tab">
                             <canvas id="renderCanvas" touch-action="none"></canvas>  
                         </div>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    
   
 
    

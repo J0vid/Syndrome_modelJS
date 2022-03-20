@@ -3,7 +3,8 @@ const canvas = document.getElementById("renderCanvas"); // Get the canvas elemen
 const comparisonCanvas = document.getElementById("renderCanvas2"); // Get the canvas element
 
 const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-                                                
+const engine2 = new BABYLON.Engine(comparisonCanvas, true); // Generate the BABYLON 3D engine
+                    
 const createScene = function () {
     
     const scene = new BABYLON.Scene(engine);  
@@ -21,9 +22,25 @@ const createScene = function () {
     return scene;
 };
 
+const createScene1 = function () {
+    
+    const scene1 = new BABYLON.Scene(engine2);  
+    
+    // const axes = new BABYLON.AxesViewer(scene1, 70);
+
+    scene1.clearColor = new BABYLON.Color4(0.988, 0.988, 0.988);
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 650, new BABYLON.Vector3(0, 15, 0));
+
+    camera.attachControl(comparisonCanvas, true);
+    camera.fov = 0.5;
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
+
+    return scene1;
+};
+
 const scene = createScene(); //Call the createScene function
 
-const comparisonScene = createScene();
+const comparisonScene = createScene1();
 
 myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", scene, function (meshes) {
     
@@ -48,13 +65,22 @@ compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", c
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
-        scene.render();
+    scene.render();
 });
+
+engine2.runRenderLoop(function () {
+    comparisonScene.render();
+});
+
 
 // Watch for browser/canvas resize events
 window.addEventListener("resize", function () {
         engine.resize();
+        engine2.resize();
 });
+
+window.onresize = function() {network.fit();}
+
 
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
