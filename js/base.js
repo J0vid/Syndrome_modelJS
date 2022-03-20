@@ -1,5 +1,7 @@
 
 const canvas = document.getElementById("renderCanvas"); // Get the canvas element
+const comparisonCanvas = document.getElementById("renderCanvas2"); // Get the canvas element
+
 const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
                                                 
 const createScene = function () {
@@ -21,6 +23,8 @@ const createScene = function () {
 
 const scene = createScene(); //Call the createScene function
 
+const comparisonScene = createScene();
+
 myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", scene, function (meshes) {
     
     for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
@@ -32,7 +36,15 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", sce
     myInfluence = scene.getMeshByName("Achondroplasia_1_gestalt(1)").morphTargetManager.getTarget(0);
 }) //end loader
 
-
+compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", comparisonScene, function (meshes) {
+    
+    for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
+        comparisonScene.getMeshByName(document.getElementById("syndrome").options[i].value).setEnabled(false)
+    }
+    
+    comparisonScene.getMeshByName(document.getElementById("syndrome").value).setEnabled(true)
+    myInfluence2 = comparisonScene.getMeshByName("Achondroplasia_1_gestalt(1)").morphTargetManager.getTarget(0);
+}) //end loader
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
@@ -73,3 +85,19 @@ slider.oninput = function() {
         }
     }
 }
+
+
+function changeWell(divName){
+
+    if(divName === 'gestaltContainer'){
+    document.getElementById("gestaltContainer").style.display = ""
+    document.getElementById("comparisonContainer").style.display = "none"
+    }
+
+    if(divName === 'comparisonContainer'){
+        document.getElementById("gestaltContainer").style.display = "none"
+        document.getElementById("comparisonContainer").style.display = ""
+        }
+}
+
+
