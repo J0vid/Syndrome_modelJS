@@ -42,20 +42,13 @@ const scene = createScene(); //Call the createScene function
 
 const comparisonScene = createScene1();
 
-myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
-    
-    myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
-}) //end loader
+// Watch for browser/canvas resize events
+window.addEventListener("resize", function () {
+        engine.resize();
+        engine2.resize();
+});
 
-compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", comparisonScene, function (meshes) {
-    
-    for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
-        comparisonScene.getMeshByName(document.getElementById("syndrome").options[i].value).setEnabled(false)
-    }
-    
-    comparisonScene.getMeshByName(document.getElementById("syndrome").value).setEnabled(true)
-    myInfluence2 = comparisonScene.getMeshByName("Achondroplasia_1_gestalt(1)").morphTargetManager.getTarget(0);
-}) //end loader
+window.onresize = function() {network.fit();}
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
@@ -67,13 +60,8 @@ engine2.runRenderLoop(function () {
 });
 
 
-// Watch for browser/canvas resize events
-window.addEventListener("resize", function () {
-        engine.resize();
-        engine2.resize();
-});
 
-window.onresize = function() {network.fit();}
+
 
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
@@ -89,24 +77,54 @@ selectedSyndrome.onchange = function() {
         document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
         document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
         document.getElementById("ageSlider").value = (parseInt(myInfluence.name.split("_")[1]) + parseInt(myInfluence.name.split("_")[2]) /2)
+
+        myInfluence.influence = document.getElementById("ageSlider").value/100
+
     }) //end loader
-
-
 
 }
 
-// var selectedSyndrome2 = document.getElementById("referenceComp");
+var selectedSyndrome2 = document.getElementById("referenceComp");
 
-// selectedSyndrome2.onchange = function() {
-//     for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
-//         comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
-//     }
+selectedSyndrome2.onchange = function() {
+    //delete last parent mesh before loading new one
+    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName("__root__").dispose()
+    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName("__root__").dispose()
 
-//     if(comparisonScene.getMeshByName("Achondroplasia") !== null){
-//         comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setEnabled(true)
-//         myInfluence2 = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
-//     }
-// }
+    refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+    
+        refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+
+        document.getElementById("compAgeSlider").min = parseInt(refInfluence.name.split("_")[1])
+        document.getElementById("compAgeSlider").max = parseInt(refInfluence.name.split("_")[2])
+        document.getElementById("compAgeSlider").value = (parseInt(refInfluence.name.split("_")[1]) + parseInt(refInfluence.name.split("_")[2]) /2)
+
+        //set influence starting value to reset slider
+        refInfluence.influence = document.getElementById("compAgeSlider").value/100
+
+    }) //end loader
+
+
+    compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+    
+        comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
+    
+    compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
+
+}) //end loader
+
+
+
+
+    // for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
+    //     comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
+    // }
+
+    // if(comparisonScene.getMeshByName("Achondroplasia") !== null){
+    //     comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setEnabled(true)
+    //     myInfluence2 = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+    // }
+}
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var slider = document.getElementById("ageSlider");
@@ -120,17 +138,13 @@ slider.oninput = function() {
 var compSlider = document.getElementById("compAgeSlider");
 compSlider.oninput = function() {
     tmpValue = this.value
-    myInfluence2.influence = tmpValue/100;
+    refInfluence.influence = tmpValue/100;
+    compInfluence.influence = tmpValue/100;
     
-    if(document.getElementById("heatmapCheck").checked) {
+    if(document.getElementById("Comparisons-tab").className === 'nav-link active show') {
         updateHeatmap(tmpValue);
-    } else if(document.getElementById("heatmapCheck").checked === false){
-        if(comparisonScene.getMeshByName("Achondroplasia") !== null){
-            //need to remove the color changes when the checkbox is unclicked
-        }
-    }
+    } 
 }
-
 
 function changeWell(divName){
 
@@ -143,6 +157,11 @@ function changeWell(divName){
         document.getElementById("gestaltContainer").style.display = "none"
         document.getElementById("comparisonContainer").style.display = ""
         }
+
+        engine2.resize();
+        // network.fit("network");
+
+
 }
 
 var rangeSlider = function(){
@@ -174,3 +193,25 @@ document.getElementById("Gestalts-tab").className = 'nav-link show active'
 
 changeWell('gestaltContainer')
 
+
+// Default mesh loading
+myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
+    
+    myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+}) //end loader
+
+// refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+    
+//     refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+// }) //end loader
+
+// compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+    
+//     //comparisonScene.getMeshByName(document.getElementById("syndromeComp")).setEnabled(false)
+
+// compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
+
+// }) //end loader
+
+engine2.resize(); //resize comp window...maybe save for when it's rendered?
+engine1.resize(); //resize comp window...maybe save for when it's rendered?

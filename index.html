@@ -15,61 +15,70 @@
 
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <link href="style.css" rel="stylesheet">
    
 </head>
 <body>
-    <div class="row pl-3">
+    <div class="row ps-3">
         <div class="col-md-3 mt-5 mx-auto">
 
             <div class="well p-3">
-                <div class="gestaltContainer" id="gestaltContainer">
+                <div class="container" id="gestaltContainer">
                     <center>
-                        <p><b>Select a syndrome</b></p>
-                        <select name="syndrome" id="syndrome">
+                        <div class="form-floating">
+                        <label for="syndrome"><small><strong>Select a syndrome</strong></small></label>
+                        <select name="syndrome" id="syndrome" class="form-select">
                             <option value="Achondroplasia">Achondroplasia</option>
                             <option value="Costello Syndrome">Costello Syndrome</option>
                             <option value="Nager Syndrome">Nager Syndrome</option>
                             </select>
-                        <br><br>
-                        <p><b>Age slider</b></p>
-                        <div class="range-slider">
+                        </div>
+
+                        <br>
+                        <label for="gestaltAge" class="range-slider">Age</label>                        
+                        <div class="range-slider" id="gestaltAge">
                             <input class="range-slider__range" id="ageSlider" type="range" value="15" min="0" max="60">
                             <span class="range-slider__value">0</span>
                             </div> 
                         <!-- <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">     -->
                     </center>   
                 </div>
-                   
                 <div class="comparisonContainer" id="comparisonContainer">
-                    <p><b>Select a reference</b></p>
-                    <select name="referenceComp" id="referenceComp">
-                        <option value="Achondroplasia_1_gestalt(1)">Achondroplasia</option>
-                        <option value="Costello Syndrome_1_gestalt">Costello Syndrome</option>
-                        <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>    
+                    <div class="form-floating">
+                        <label for="referenceComp"><small><strong>Select a reference</strong></small></label>
+                    <select name="referenceComp" id="referenceComp" class="form-select">
+                        <option value="Achondroplasia">Achondroplasia</option>
+                        <option value="Costello Syndrome">Costello Syndrome</option>
+                        <option value="Nager Syndrome">Nager Syndrome</option>    
                     </select>
-                    
-                    <p><b>Select a syndrome</b></p>
-                    <select name="syndromeComp" id="syndromeComp">
-                        <option value="Achondroplasia.glb">Achondroplasia</option>
-                        <option value="Costello Syndrome_1_gestalt">Costello Syndrome</option>
-                        <option value="Nager Syndrome_1_gestalt">Nager Syndrome</option>    
+                    </div>
+                    <br>
+                    <div class="form-floating">
+                        <label for="syndromeComp"><small><strong>Select a comparison</strong></small></label>                    
+                        <select name="syndromeComp" id="syndromeComp" class="form-select">
+                        <option value="Achondroplasia">Achondroplasia</option>
+                        <option value="Costello Syndrome">Costello Syndrome</option>
+                        <option value="Nager Syndrome">Nager Syndrome</option>    
                     </select>
+                    </div>
+                    <br>
 
-                    <p><b>Age slider</b></p>
-                    <div class="range-slider">
+                    <label for="comparisonAge" class="range-slider">Age</label>  
+                    <div class="range-slider" id="comprisonAge">
                         <input class="range-slider__range" id="compAgeSlider" type="range" value="15" min="0" max="60">
                         <span class="range-slider__value">0</span>
-                      </div> 
+                    </div> 
                         <!-- <input type="range" min="0" max="100" value="0" class="slider" id="compAgeSlider">     -->
 
-                    <p><b>Heatmap checkbox</b></p>
-                    <input type="checkbox" id="heatmapCheck" onclick="updateHeatmap()">
                 </div>
             </div>
         </div>
@@ -81,16 +90,16 @@
                 <div class="container-fluid" style="max-width: 1400px;">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="Gestalts-tab" data-toggle="tab" href="#Gestalts" role="tab" aria-controls="Gestalts" aria-selected="true" onclick="changeWell('gestaltContainer')">Gestalts</a>
+                            <button class="nav-link active" id="Gestalts-tab" data-bs-toggle="tab" data-bs-target="#Gestalts" type="button" role="tab" aria-controls="Gestalts" aria-selected="true" onclick="changeWell('gestaltContainer')">Gestalts</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="Comparisons-tab" data-toggle="tab" href="#Comparisons" role="tab" aria-controls="Comparisons" aria-selected="false" onclick="changeWell('comparisonContainer')">Comparisons</a>
+                            <button class="nav-link" id="Comparisons-tab" data-bs-toggle="tab" data-bs-target="#Comparisons" type="button" role="tab" aria-controls="Comparisons" aria-selected="false" onclick="changeWell('comparisonContainer')">Comparisons</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="Submitted-tab" data-toggle="tab" href="#Submitted" role="tab" aria-controls="Submitted" aria-selected="false">Submitted Face</a>
+                            <button class="nav-link" id="Submitted-tab" data-bs-toggle="tab" data-bs-target="#Submitted" type="button" role="tab" aria-controls="Submitted" aria-selected="false">Submitted Face</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="About-tab" data-toggle="tab" href="#About" role="tab" aria-controls="About" aria-selected="false">About this app</a>
+                            <button class="nav-link" id="About-tab" data-bs-toggle="tab" data-bs-target="#About" type="button" role="tab" aria-controls="About" aria-selected="false">About this app</a>
                         </li>
                     </ul>
                     
@@ -117,8 +126,6 @@
 <script src="js/base.js"></script>
 <script src="js/heatmap.js"></script>
 <script src="js/visnetwork.js"></script>
-
-
 
 </body>
 
