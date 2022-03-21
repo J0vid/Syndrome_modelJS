@@ -17,7 +17,7 @@ const createScene = function () {
 
     camera.attachControl(canvas, true);
     camera.fov = 0.5;
-    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(100, 100, 0));
 
     return scene;
 };
@@ -42,14 +42,9 @@ const scene = createScene(); //Call the createScene function
 
 const comparisonScene = createScene1();
 
-myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", scene, function (meshes) {
+myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
-    for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
-        scene.getMeshByName(document.getElementById("syndrome").options[i].value).setEnabled(false)
-    }
-    
-    scene.getMeshByName(document.getElementById("syndrome").value).setEnabled(true)
-    myInfluence = scene.getMeshByName("Achondroplasia_1_gestalt(1)").morphTargetManager.getTarget(0);
+    myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
 }) //end loader
 
 compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", comparisonScene, function (meshes) {
@@ -80,33 +75,32 @@ window.addEventListener("resize", function () {
 
 window.onresize = function() {network.fit();}
 
-
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
 
 selectedSyndrome.onchange = function() {
-    for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
-        scene.getMeshByName(document.getElementById("syndrome").options[i].value).setEnabled(false)
-    }
+    //delete last parent mesh before loading new one
+    scene.getMeshByName("__root__").dispose()
 
-    if(scene.getMeshByName("Achondroplasia_1_gestalt(1)") !== null){
-        scene.getMeshByName(document.getElementById("syndrome").value).setEnabled(true)
+    myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
+    
         myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
-    }
+    }) //end loader
+
 }
 
-var selectedSyndrome2 = document.getElementById("referenceComp");
+// var selectedSyndrome2 = document.getElementById("referenceComp");
 
-selectedSyndrome2.onchange = function() {
-    for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
-        comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
-    }
+// selectedSyndrome2.onchange = function() {
+//     for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
+//         comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
+//     }
 
-    if(comparisonScene.getMeshByName("Achondroplasia_1_gestalt(1)") !== null){
-        comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setEnabled(true)
-        myInfluence2 = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
-    }
-}
+//     if(comparisonScene.getMeshByName("Achondroplasia") !== null){
+//         comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setEnabled(true)
+//         myInfluence2 = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+//     }
+// }
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var slider = document.getElementById("ageSlider");
@@ -125,7 +119,7 @@ compSlider.oninput = function() {
     if(document.getElementById("heatmapCheck").checked) {
         updateHeatmap(tmpValue);
     } else if(document.getElementById("heatmapCheck").checked === false){
-        if(comparisonScene.getMeshByName("Achondroplasia_1_gestalt(1)") !== null){
+        if(comparisonScene.getMeshByName("Achondroplasia") !== null){
             //need to remove the color changes when the checkbox is unclicked
         }
     }
@@ -167,9 +161,9 @@ var rangeSlider = function(){
   
 
 // Set some startup values
-document.getElementById("syndrome").value =  "Achondroplasia_1_gestalt(1)"
-document.getElementById("referenceComp").value = "Achondroplasia_1_gestalt(1)"
-document.getElementById("syndromeComp").value = "Nager Syndrome_1_gestalt"
+document.getElementById("syndrome").value =  "Achondroplasia"
+document.getElementById("referenceComp").value = "Achondroplasia"
+document.getElementById("syndromeComp").value = "Nager Syndrome"
 document.getElementById("Gestalts-tab").className = 'nav-link show active'
 
 changeWell('gestaltContainer')
