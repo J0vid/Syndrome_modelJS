@@ -10,7 +10,7 @@ const createScene = function () {
     const scene = new BABYLON.Scene(engine);  
     scene.useRightHandedSystem = false;
     
-    const axes = new BABYLON.AxesViewer(scene, 70);
+    // const axes = new BABYLON.AxesViewer(scene, 70);
 
     scene.clearColor = new BABYLON.Color4(0.988, 0.988, 0.988);
     const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 650, new BABYLON.Vector3(0, 15, 0));
@@ -45,7 +45,6 @@ const comparisonScene = createScene1();
 myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", "syndrome_model.glb", scene, function (meshes) {
     
     for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
-        console.log(scene.getMeshByName(document.getElementById("syndrome").options[i].value))
         scene.getMeshByName(document.getElementById("syndrome").options[i].value).setEnabled(false)
     }
     
@@ -87,7 +86,6 @@ var selectedSyndrome = document.getElementById("syndrome");
 
 selectedSyndrome.onchange = function() {
     for (var i = 0; i < document.getElementById("syndrome").options.length; i++) {
-        console.log(scene.getMeshByName(document.getElementById("syndrome").options[i].value))
         scene.getMeshByName(document.getElementById("syndrome").options[i].value).setEnabled(false)
     }
 
@@ -101,7 +99,6 @@ var selectedSyndrome2 = document.getElementById("referenceComp");
 
 selectedSyndrome2.onchange = function() {
     for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
-        console.log(comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value))
         comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
     }
 
@@ -148,4 +145,32 @@ function changeWell(divName){
         }
 }
 
+var rangeSlider = function(){
+    var slider = $('.range-slider'),
+        range = $('.range-slider__range'),
+        value = $('.range-slider__value');
+      
+    slider.each(function(){
+  
+      value.each(function(){
+        var value = $(this).prev().attr('value');
+        $(this).html(value  + ' y/o');
+      });
+  
+      range.on('input', function(){
+        $(this).next(value).html(this.value + ' y/o');
+      });
+    });
+  };
+
+  rangeSlider();
+  
+
+// Set some startup values
+document.getElementById("syndrome").value =  "Achondroplasia_1_gestalt(1)"
+document.getElementById("referenceComp").value = "Achondroplasia_1_gestalt(1)"
+document.getElementById("syndromeComp").value = "Nager Syndrome_1_gestalt"
+document.getElementById("Gestalts-tab").className = 'nav-link show active'
+
+changeWell('gestaltContainer')
 

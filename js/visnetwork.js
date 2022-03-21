@@ -51,22 +51,7 @@ var options = {
     
   },
   edges: {
-    color: "#AE80E6",
-    layout: {
-      randomSeed: undefined,
-      hierarchical: {
-          improvedLayout: true,
-          enabled: true,
-          levelSeparation: 150,
-          nodeSpacing: 100,
-          treeSpacing: 200,
-          blockShifting: true,
-          edgeMinimization: true,
-          parentCentralization: true,
-          direction: 'UD',        // UD, DU, LR, RL
-          sortMethod: 'directed'   // hubsize, directed
-      }
-    }
+    color: "#AE80E6"
   },
   
 };

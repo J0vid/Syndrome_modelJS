@@ -7,25 +7,81 @@ body {background-color: #e5e5e5; }
     max-height: 60px;
 }
 
+/* Big page styles */
 .row {
     width: 95vw;
     height: 80vh;
 }
 
+/* Side panel styling */
 
 .well {
   background-color: #fcfcfc;
   border-radius: 20px;
   box-shadow: 4px 10px 10px 0 rgba(0,0,0,.1);
 }
-.control-label {color: black;}
-.irs-min, .irs-max {color: black;}
-.checkbox {color: black;}
 
+.range-slider {
+  width: 76%;
+}
+
+.range-slider__range {
+  -webkit-appearance: none;
+  width: 76%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d7dcdf;
+  outline: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+/* Range Label */
+.range-slider__value {
+  display: inline-block;
+  position: relative;
+  width: 20.7%;
+  color: #fcfcfc;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  background: #AE80E6;
+  padding: 5px 1px;
+  margin-left: 3px;
+}
+
+.range-slider__value::after {
+  position: absolute;
+  top: 8px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #AE80E6;
+  border-bottom: 7px solid transparent;
+  content: '';
+}
+
+/* // Firefox Overrides */
+::-moz-range-track {
+    background: #d7dcdf;
+    border: 0;
+}
+
+input::-moz-focus-inner,
+input::-moz-focus-outer { 
+  border: 0; 
+}
+
+/* Main window styling */
 .nav-item > a:hover {
     border-radius: 20px 20px 0px 0px;
-    border-color: transparent;
+    border-color: #fcfcfc;
     color: #AE80E6;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-left-width: 2px;
   }
        
 .nav-item > a {
@@ -117,3 +173,6 @@ img{
 }
 
 }
+
+
+
