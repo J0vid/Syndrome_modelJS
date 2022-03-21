@@ -85,7 +85,13 @@ selectedSyndrome.onchange = function() {
     myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
         myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+
+        document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
+        document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
+        document.getElementById("ageSlider").value = (parseInt(myInfluence.name.split("_")[1]) + parseInt(myInfluence.name.split("_")[2]) /2)
     }) //end loader
+
+
 
 }
 
