@@ -59,10 +59,6 @@ engine2.runRenderLoop(function () {
     comparisonScene.render();
 });
 
-
-
-
-
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
 
@@ -77,15 +73,14 @@ selectedSyndrome.onchange = function() {
         document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
         document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
         document.getElementById("ageSlider").value = (parseInt(myInfluence.name.split("_")[1]) + parseInt(myInfluence.name.split("_")[2]) /2)
+        document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value + " y/o"
 
         myInfluence.influence = document.getElementById("ageSlider").value/100
 
     }) //end loader
-
 }
 
 var selectedSyndrome2 = document.getElementById("referenceComp");
-
 selectedSyndrome2.onchange = function() {
     //delete last parent mesh before loading new one
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName("__root__").dispose()
@@ -98,33 +93,20 @@ selectedSyndrome2.onchange = function() {
         document.getElementById("compAgeSlider").min = parseInt(refInfluence.name.split("_")[1])
         document.getElementById("compAgeSlider").max = parseInt(refInfluence.name.split("_")[2])
         document.getElementById("compAgeSlider").value = (parseInt(refInfluence.name.split("_")[1]) + parseInt(refInfluence.name.split("_")[2]) /2)
+        document.getElementById("compAgeSliderLabel").innerHTML = document.getElementById("compAgeSlider").value + " y/o"
 
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
 
     }) //end loader
 
-
     compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
-    
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
-    
-    compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
-
-}) //end loader
-
-
-
-
-    // for (var i = 0; i < document.getElementById("referenceComp").options.length; i++) {
-    //     comparisonScene.getMeshByName(document.getElementById("referenceComp").options[i].value).setEnabled(false)
-    // }
-
-    // if(comparisonScene.getMeshByName("Achondroplasia") !== null){
-    //     comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setEnabled(true)
-    //     myInfluence2 = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
-    // }
+        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
+    }) //end loader
+    updateHeatmap(document.getElementById("ageSlider").value)
 }
+
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var slider = document.getElementById("ageSlider");
@@ -141,7 +123,7 @@ compSlider.oninput = function() {
     refInfluence.influence = tmpValue/100;
     compInfluence.influence = tmpValue/100;
     
-    if(document.getElementById("Comparisons-tab").className === 'nav-link active show') {
+    if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
         updateHeatmap(tmpValue);
     } 
 }
@@ -160,7 +142,6 @@ function changeWell(divName){
 
         engine2.resize();
         // network.fit("network");
-
 
 }
 
@@ -187,17 +168,24 @@ var rangeSlider = function(){
 
 // Set some startup values
 document.getElementById("syndrome").value =  "Achondroplasia"
-document.getElementById("referenceComp").value = "Achondroplasia"
-document.getElementById("syndromeComp").value = "Nager Syndrome"
+// document.getElementById("referenceComp").value = "Achondroplasia"
+// document.getElementById("syndromeComp").value = "Nager Syndrome"
 document.getElementById("Gestalts-tab").className = 'nav-link show active'
 
 changeWell('gestaltContainer')
-
 
 // Default mesh loading
 myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
     myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+
+    document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
+    document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
+    document.getElementById("ageSlider").value = (parseInt(myInfluence.name.split("_")[1]) + parseInt(myInfluence.name.split("_")[2]) /2)
+    document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value + " y/o"
+
+    myInfluence.influence = document.getElementById("ageSlider").value/100
+
 }) //end loader
 
 // refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
@@ -213,5 +201,4 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("
 
 // }) //end loader
 
-engine2.resize(); //resize comp window...maybe save for when it's rendered?
-engine1.resize(); //resize comp window...maybe save for when it's rendered?
+// engine2.resize(); //resize comp window...maybe save for when it's rendered?

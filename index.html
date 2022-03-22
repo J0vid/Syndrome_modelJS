@@ -47,7 +47,7 @@
                         <label for="gestaltAge" class="range-slider">Age</label>                        
                         <div class="range-slider" id="gestaltAge">
                             <input class="range-slider__range" id="ageSlider" type="range" value="15" min="0" max="60">
-                            <span class="range-slider__value">0</span>
+                            <span class="range-slider__value" id="ageSliderLabel">0</span>
                             </div> 
                         <!-- <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">     -->
                     </center>   
@@ -56,6 +56,7 @@
                     <div class="form-floating">
                         <label for="referenceComp"><small><strong>Select a reference</strong></small></label>
                     <select name="referenceComp" id="referenceComp" class="form-select">
+                        <option selected>Reference</option>
                         <option value="Achondroplasia">Achondroplasia</option>
                         <option value="Costello Syndrome">Costello Syndrome</option>
                         <option value="Nager Syndrome">Nager Syndrome</option>    
@@ -65,9 +66,10 @@
                     <div class="form-floating">
                         <label for="syndromeComp"><small><strong>Select a comparison</strong></small></label>                    
                         <select name="syndromeComp" id="syndromeComp" class="form-select">
-                        <option value="Achondroplasia">Achondroplasia</option>
-                        <option value="Costello Syndrome">Costello Syndrome</option>
-                        <option value="Nager Syndrome">Nager Syndrome</option>    
+                            <option selected>Comparison</option>
+                            <option value="Achondroplasia">Achondroplasia</option>
+                            <option value="Costello Syndrome">Costello Syndrome</option>
+                            <option value="Nager Syndrome">Nager Syndrome</option>    
                     </select>
                     </div>
                     <br>
@@ -75,7 +77,7 @@
                     <label for="comparisonAge" class="range-slider">Age</label>  
                     <div class="range-slider" id="comprisonAge">
                         <input class="range-slider__range" id="compAgeSlider" type="range" value="15" min="0" max="60">
-                        <span class="range-slider__value">0</span>
+                        <span class="range-slider__value" id="compAgeSliderLabel">0</span>
                     </div> 
                         <!-- <input type="range" min="0" max="100" value="0" class="slider" id="compAgeSlider">     -->
 
