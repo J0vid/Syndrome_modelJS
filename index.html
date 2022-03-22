@@ -33,10 +33,9 @@
 
             <div class="well p-3">
                 <div class="container" id="gestaltContainer">
-                    <center>
                         <div class="form-floating">
-                        <label for="syndrome"><small><strong>Select a syndrome</strong></small></label>
-                        <select name="syndrome" id="syndrome" class="form-select">
+                        <label for="syndrome">Syndrome</label>
+                        <select name="syndrome" id="syndrome" class="form-select" aria-label="Floating label select example">
                             <option value="Achondroplasia">Achondroplasia</option>
                             <option value="Costello Syndrome">Costello Syndrome</option>
                             <option value="Nager Syndrome">Nager Syndrome</option>
@@ -50,13 +49,12 @@
                             <span class="range-slider__value" id="ageSliderLabel">0</span>
                             </div> 
                         <!-- <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">     -->
-                    </center>   
                 </div>
                 <div class="comparisonContainer" id="comparisonContainer">
                     <div class="form-floating">
-                        <label for="referenceComp"><small><strong>Select a reference</strong></small></label>
+                        <label for="referenceComp">Reference</label>
                     <select name="referenceComp" id="referenceComp" class="form-select">
-                        <option selected>Reference</option>
+                        <option selected> </option>
                         <option value="Achondroplasia">Achondroplasia</option>
                         <option value="Costello Syndrome">Costello Syndrome</option>
                         <option value="Nager Syndrome">Nager Syndrome</option>    
@@ -64,9 +62,9 @@
                     </div>
                     <br>
                     <div class="form-floating">
-                        <label for="syndromeComp"><small><strong>Select a comparison</strong></small></label>                    
+                        <label for="syndromeComp">Comparison</label>                    
                         <select name="syndromeComp" id="syndromeComp" class="form-select">
-                            <option selected>Comparison</option>
+                            <option selected> </option>
                             <option value="Achondroplasia">Achondroplasia</option>
                             <option value="Costello Syndrome">Costello Syndrome</option>
                             <option value="Nager Syndrome">Nager Syndrome</option>    
@@ -86,8 +84,6 @@
         </div>
 
         <div class="col-md-9 mt-5">
-  
-            
             <div id="mainWindow">
                 <div class="container-fluid" style="max-width: 1400px;">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -113,6 +109,7 @@
                         <div class="tab-pane fade" id="Comparisons" role="tabpanel" aria-labelledby="Comparison-tab">
                             <canvas id="renderCanvas2" touch-action="none"></canvas>  
                             <br>
+                            <center><font style="color: red; font-size: xx-large;"> Bigger </font><font style="color: #fcfcfc; font-size: xx-large;"> | </font><font style="color: #fcfcfc; font-size: xx-large;"> Similar </font><font style="color: #fcfcfc; font-size: xx-large;"> | </font><font style="color: blue; font-size: xx-large;"> Smaller </font></center>
                             <br>
                             <div id="mynetwork"></div>
                         </div>

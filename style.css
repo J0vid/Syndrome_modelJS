@@ -21,16 +21,29 @@ body {background-color: #e5e5e5; }
   box-shadow: 4px 10px 10px 0 rgba(0,0,0,.1);
 }
 
-select {
+/* select {
   box-shadow: 4px 5px 5px 0 rgba(0,0,0,.1);
   background-color: #e5e5e5;
   border: 0;
   padding: 2em;
   border-radius: 20px;
+} */
+
+.form-floating > label {
+  padding: 1%;
+  color:#AE80E6;
+  font-size: large;
 }
 
+label {
+  padding: 1%;
+  color:#AE80E6;
+  font-size: large;
+}
+
+
 .range-slider {
-  width: 76%;
+  width: 100%;
 }
 
 .range-slider__range {
@@ -130,7 +143,7 @@ input::-moz-focus-outer {
 
 #mynetwork {
     margin: 0 auto;
-    width: 50%;
+    width: 70%;
     height: 40%;
     border-radius: 20px 20px 20px 20px;
     box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
