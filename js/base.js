@@ -124,12 +124,20 @@ selectedSyndromeComp.onchange = function() {
 
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
+
+        if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
+            updateHeatmap(refInfluence.influence);
+        } 
     }) //end loader
 
     compMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
         compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
+
+        if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
+            updateHeatmap(compInfluence.influence);
+        } 
     }) //end loader
 
 }
@@ -193,8 +201,8 @@ var rangeSlider = function(){
 
 // Set some startup values
 document.getElementById("syndrome").value =  "Achondroplasia"
-// document.getElementById("referenceComp").value = "Achondroplasia"
-// document.getElementById("syndromeComp").value = "Nager Syndrome"
+document.getElementById("referenceComp").value = " "
+document.getElementById("syndromeComp").value = " "
 document.getElementById("Gestalts-tab").className = 'nav-link show active'
 
 changeWell('gestaltContainer')
