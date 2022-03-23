@@ -2,7 +2,7 @@
  var DIR = "./images/mod_images/";
 
  var nodes = new vis.DataSet([
-    {id: 1, label: 'face', shape: "circularImage", image: DIR + "mod1.png" },
+    {id: 1, label: 'face', shape: "circularImage", image: DIR + "mod1.png", x: -500, y: -800},
     {id: 2, label: 'posterior_mandible', shape: "circularImage", image: DIR + "mod2.png" },
     {id: 3, label: 'nose', shape: "circularImage", image: DIR + "mod3.png" },
     {id: 4, label: 'anterior_mandible', shape: "circularImage", image: DIR + "mod4.png" },
@@ -30,9 +30,9 @@ var data = {
     edges: edges
 };
 var options = {
-  //   autoResize: true,
-  // height: '100%',
-  // width: '100%',
+  // autoResize: true,
+  // height: '400px',
+  // width: '300px',
   clickToUse: false,
   nodes: {
     borderWidth: 4,
@@ -53,7 +53,7 @@ var options = {
   edges: {
     color: "#AE80E6"
   },
-  
+  physics: false
 };
 
 // initialize your network!

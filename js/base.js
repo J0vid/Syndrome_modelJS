@@ -66,7 +66,7 @@ selectedSyndrome.onchange = function() {
     //delete last parent mesh before loading new one
     scene.getMeshByName("__root__").dispose()
 
-    myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
+    myMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
         myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
 
@@ -82,11 +82,11 @@ selectedSyndrome.onchange = function() {
 
 var selectedSyndrome2 = document.getElementById("referenceComp");
 selectedSyndrome2.onchange = function() {
-    //delete last parent mesh before loading new one
-    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName("__root__").dispose()
-    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName("__root__").dispose()
-
-    refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+    //if either ref or comp change, delete last parent meshes and load new ones
+    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
+    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
+ 
+    refMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
     
         refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
 
@@ -97,23 +97,48 @@ selectedSyndrome2.onchange = function() {
 
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
-
     }) //end loader
 
-    compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+    compMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);    
+        compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
-        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
     }) //end loader
-    updateHeatmap(document.getElementById("ageSlider").value)
+
+    
 }
 
+var selectedSyndromeComp = document.getElementById("syndromeComp");
+selectedSyndromeComp.onchange = function() {
+    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
+    if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
+ 
+    refMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+    
+        refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+
+        document.getElementById("compAgeSlider").min = parseInt(refInfluence.name.split("_")[1])
+        document.getElementById("compAgeSlider").max = parseInt(refInfluence.name.split("_")[2])
+        document.getElementById("compAgeSlider").value = (parseInt(refInfluence.name.split("_")[1]) + parseInt(refInfluence.name.split("_")[2]) /2)
+        document.getElementById("compAgeSliderLabel").innerHTML = document.getElementById("compAgeSlider").value + " y/o"
+
+        //set influence starting value to reset slider
+        refInfluence.influence = document.getElementById("compAgeSlider").value/100
+    }) //end loader
+
+    compMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);    
+        compInfluence.influence = document.getElementById("compAgeSlider").value/100
+        comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
+    }) //end loader
+
+}
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var slider = document.getElementById("ageSlider");
 slider.oninput = function() {
     tmpValue = this.value
     myInfluence.influence = tmpValue/100;
-
 }
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
@@ -175,7 +200,7 @@ document.getElementById("Gestalts-tab").className = 'nav-link show active'
 changeWell('gestaltContainer')
 
 // Default mesh loading
-myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
+myMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
     myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
 
@@ -202,3 +227,11 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("
 // }) //end loader
 
 // engine2.resize(); //resize comp window...maybe save for when it's rendered?
+
+// Vanilla
+// var httpRequest = new XMLHttpRequest()
+// httpRequest.onreadystatechange = function (data) {
+//   // code
+// }
+// httpRequest.open('GET', 'genopheno.ucalgary.ca/api/Gestalt/predPC')
+// httpRequest.send()
