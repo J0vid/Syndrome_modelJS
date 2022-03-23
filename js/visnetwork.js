@@ -53,7 +53,6 @@ var options = {
   edges: {
     color: "#AE80E6"
   },
-  physics: false
 };
 
 // initialize your network!

@@ -66,7 +66,7 @@ selectedSyndrome.onchange = function() {
     //delete last parent mesh before loading new one
     scene.getMeshByName("__root__").dispose()
 
-    myMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
+    myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
         myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
 
@@ -113,7 +113,7 @@ selectedSyndromeComp.onchange = function() {
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
  
-    refMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+    refMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
     
         refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
 
@@ -148,6 +148,19 @@ slider.oninput = function() {
     tmpValue = this.value
     myInfluence.influence = tmpValue/100;
 }
+
+var sliderSex = document.getElementById("sexSlider");
+sliderSex.oninput = function() {
+    tmpValue = this.value
+    scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(2).influence = tmpValue/100;
+}
+
+var sliderSev = document.getElementById("sevSlider");
+sliderSev.oninput = function() {
+    tmpValue = this.value
+    scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0).influence = tmpValue/10;
+}
+
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var compSlider = document.getElementById("compAgeSlider");
@@ -208,9 +221,9 @@ document.getElementById("Gestalts-tab").className = 'nav-link show active'
 changeWell('gestaltContainer')
 
 // Default mesh loading
-myMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
+myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
-    myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+    myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(1);
 
     document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
     document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])

@@ -37,7 +37,7 @@
                         <label for="syndrome">Syndrome</label>
                         <select name="syndrome" id="syndrome" class="form-select" aria-label="Floating label select example">
                             <option value="Achondroplasia">Achondroplasia</option>
-                            <option value="Costello Syndrome">Costello Syndrome</option>
+                            <option value="Apert Syndrome">Apert Syndrome</option>
                             <option value="Nager Syndrome">Nager Syndrome</option>
                             </select>
                         </div>
@@ -47,7 +47,19 @@
                         <div class="range-slider" id="gestaltAge">
                             <input class="range-slider__range" id="ageSlider" type="range" value="15" min="0" max="60">
                             <span class="range-slider__value" id="ageSliderLabel">0</span>
-                            </div> 
+                        </div> 
+
+                        <label for="gestaltSex" class="range-slider">Sex</label>                        
+                        <div class="range-slider" id="gestaltSex">
+                            <input class="range-slider__range" id="sexSlider" type="range" value="0" min="-50" max="150">
+                            <span class="range-slider__value" id="sexSliderLabel">0</span>
+                        </div> 
+
+                        <label for="gestaltSev" class="range-slider">Severity</label>                        
+                        <div class="range-slider" id="gestaltSev">
+                            <input class="range-slider__range" id="sevSlider" type="range" value="-20" min="0" max="20">
+                            <span class="range-slider__value" id="sevSliderLabel">0</span>
+                        </div> 
                         <!-- <input type="range" min="0" max="100" value="0" class="slider" id="ageSlider">     -->
                 </div>
                 <div class="comparisonContainer" id="comparisonContainer">
@@ -56,7 +68,7 @@
                     <select name="referenceComp" id="referenceComp" class="form-select">
                         <option selected> </option>
                         <option value="Achondroplasia">Achondroplasia</option>
-                        <option value="Costello Syndrome">Costello Syndrome</option>
+                        <option value="Costello Syndrome">Apert Syndrome</option>
                         <option value="Nager Syndrome">Nager Syndrome</option>    
                     </select>
                     </div>
