@@ -158,7 +158,7 @@ sliderSex.oninput = function() {
 var sliderSev = document.getElementById("sevSlider");
 sliderSev.oninput = function() {
     tmpValue = this.value
-    scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0).influence = tmpValue/10;
+    scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0).influence = tmpValue/30;
 }
 
 
@@ -241,6 +241,10 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
     document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value + " y/o"
 
     myInfluence.influence = document.getElementById("ageSlider").value/100
+
+    sevInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+    document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 1000
+    document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 1000
 
 }) //end loader
 
