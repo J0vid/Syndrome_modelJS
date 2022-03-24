@@ -13,7 +13,7 @@ const createScene = function () {
     // const axes = new BABYLON.AxesViewer(scene, 70);
 
     scene.clearColor = new BABYLON.Color4(0.988, 0.988, 0.988);
-    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 650, new BABYLON.Vector3(0, 15, 0));
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 750, new BABYLON.Vector3(0, 15, 0));
 
     camera.attachControl(canvas, true);
     camera.fov = 0.5;
@@ -29,7 +29,7 @@ const createScene1 = function () {
     // const axes = new BABYLON.AxesViewer(scene1, 70);
 
     scene1.clearColor = new BABYLON.Color4(0.988, 0.988, 0.988);
-    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 650, new BABYLON.Vector3(0, 15, 0));
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 750, new BABYLON.Vector3(0, 15, 0));
 
     camera.attachControl(comparisonCanvas, true);
     camera.fov = 0.5;
@@ -205,11 +205,11 @@ var rangeSlider = function(){
   
       value.each(function(){
         var value = $(this).prev().attr('value');
-        $(this).html(value  + ' y/o');
+        $(this).html(value + " ");
       });
   
       range.on('input', function(){
-        $(this).next(value).html(this.value + ' y/o');
+        $(this).next(value).html(this.value + " ");
       });
     });
   };
@@ -224,7 +224,6 @@ var rangeSlider = function(){
 
   rangeSlider2();
   
-
 // Set some startup values
 document.getElementById("syndrome").value =  "Achondroplasia"
 document.getElementById("sexSlider").value = 0
@@ -243,7 +242,7 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
     document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
     document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
     document.getElementById("ageSlider").value = (parseInt(myInfluence.name.split("_")[1]) + parseInt(myInfluence.name.split("_")[2]) /2)
-    document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value + " y/o"
+    document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value
 
     myInfluence.influence = document.getElementById("ageSlider").value/100
 

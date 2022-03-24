@@ -121,7 +121,7 @@
                         </div>
 
                         <br>
-                        <label for="gestaltAge" class="range-slider">Age</label>                        
+                        <label for="gestaltAge" class="range-slider">Age (Years)</label>                        
                         <div class="range-slider" id="gestaltAge">
                             <input class="range-slider__range" id="ageSlider" type="range" value="15" min="0" max="60">
                             <span class="range-slider__value" id="ageSliderLabel">0</span>
@@ -320,7 +320,7 @@
                     </div>
                     <br>
 
-                    <label for="comparisonAge" class="range-slider">Age</label>  
+                    <label for="comparisonAge" class="range-slider">Age (Years)</label>  
                     <div class="range-slider" id="comprisonAge">
                         <input class="range-slider__range" id="compAgeSlider" type="range" value="15" min="0" max="60">
                         <span class="range-slider__value" id="compAgeSliderLabel">0</span>
@@ -333,7 +333,7 @@
 
         <div class="col-md-9 mt-5">
             <div id="mainWindow">
-                <div class="container-fluid" style="max-width: 1400px;">
+                <!-- <div class="container-fluid" style="max-width: 1400px;"> -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="Gestalts-tab" data-bs-toggle="tab" data-bs-target="#Gestalts" type="button" role="tab" aria-controls="Gestalts" aria-selected="true" onclick="changeWell('gestaltContainer')">Gestalts</a>
@@ -342,10 +342,10 @@
                             <button class="nav-link" id="Comparisons-tab" data-bs-toggle="tab" data-bs-target="#Comparisons" type="button" role="tab" aria-controls="Comparisons" aria-selected="false" onclick="changeWell('comparisonContainer')">Comparisons</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Submitted-tab" data-bs-toggle="tab" data-bs-target="#Submitted" type="button" role="tab" aria-controls="Submitted" aria-selected="false">Submitted Face</a>
+                            <button class="nav-link" id="Submitted-tab" data-bs-toggle="tab" data-bs-target="#Submitted" type="button" role="tab" aria-controls="Submitted" aria-selected="false">Submit Face</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="About-tab" data-bs-toggle="tab" data-bs-target="#About" type="button" role="tab" aria-controls="About" aria-selected="false">About this app</a>
+                            <button class="nav-link" id="About-tab" data-bs-toggle="tab" data-bs-target="#About" type="button" role="tab" aria-controls="About" aria-selected="false">About</a>
                         </li>
                     </ul>
                     
@@ -357,7 +357,13 @@
                         <div class="tab-pane fade" id="Comparisons" role="tabpanel" aria-labelledby="Comparison-tab">
                             <canvas id="renderCanvas2" touch-action="none"></canvas>  
                             <br>
-                            <center><font style="color: red; font-size: xx-large;"> Bigger </font><font style="color: #fcfcfc; font-size: xx-large;"> | </font><font style="color: #fcfcfc; font-size: xx-large;"> Similar </font><font style="color: #fcfcfc; font-size: xx-large;"> | </font><font style="color: blue; font-size: xx-large;"> Smaller </font></center>
+                            <center>
+                                <span class="hmBanner" style="color: red;"> Bigger </span>
+                                <span class="hmBanner" style="color: #fcfcfc;"> | </span>
+                                <span class="hmBanner" style="color: #fcfcfc;"> Similar </span>
+                                <span class="hmBanner" style="color: #fcfcfc;"> | </span>
+                                <span class="hmBanner" style="color: blue;"> Smaller </span>
+                            </center>
                             <br>
                             <div id="mynetwork"></div>
                         </div>
