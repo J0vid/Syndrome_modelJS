@@ -80,6 +80,12 @@ selectedSyndrome.onchange = function() {
 
         myInfluence.influence = document.getElementById("ageSlider").value/100
 
+        sevInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+        document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 200
+        document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 200
+        document.getElementById("sevSlider").value = 0
+
+
     }) //end loader
 }
 
@@ -190,10 +196,6 @@ function changeWell(divName){
         document.getElementById("gestaltContainer").style.display = "none"
         document.getElementById("comparisonContainer").style.display = ""
         }
-
-        engine2.resize();
-        // network.fit("network");
-
 }
 
 var rangeSlider = function(){
@@ -247,8 +249,8 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
     myInfluence.influence = document.getElementById("ageSlider").value/100
 
     sevInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
-    document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 1000
-    document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 1000
+    document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 200
+    document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 200
 
 }) //end loader
 
