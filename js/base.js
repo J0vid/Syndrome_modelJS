@@ -59,6 +59,7 @@ engine.runRenderLoop(function () {
 engine2.runRenderLoop(function () {
     comparisonScene.getEngine().resize();
     comparisonScene.render();
+    network.fit();
 });
 
 // Define selected morphtarget
