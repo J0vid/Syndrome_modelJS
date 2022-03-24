@@ -68,7 +68,7 @@ selectedSyndrome.onchange = function() {
 
     myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
     
-        myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
+        myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(1);
 
         document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
         document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
@@ -152,7 +152,7 @@ slider.oninput = function() {
 var sliderSex = document.getElementById("sexSlider");
 sliderSex.oninput = function() {
     tmpValue = this.value
-    scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(2).influence = tmpValue/100;
+    scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(2).influence = tmpValue/10;
 }
 
 var sliderSev = document.getElementById("sevSlider");
@@ -210,10 +210,20 @@ var rangeSlider = function(){
   };
 
   rangeSlider();
+
+  var rangeSlider2 = function(){
+    var slider = $('.range-slider2'),
+    range = $('.range-slider__range2'),
+    value = $('.range-slider__value2');
+  };
+
+  rangeSlider2();
   
 
 // Set some startup values
 document.getElementById("syndrome").value =  "Achondroplasia"
+document.getElementById("sexSlider").value = 0
+document.getElementById("sevSlider").value = 0
 document.getElementById("referenceComp").value = " "
 document.getElementById("syndromeComp").value = " "
 document.getElementById("Gestalts-tab").className = 'nav-link show active'

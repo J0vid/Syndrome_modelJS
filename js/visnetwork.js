@@ -38,10 +38,10 @@ var options = {
     borderWidth: 4,
     size: 30,
     color: {
-      border: "#AE80E6",
+      border: "#48298C",
       background: "#6AAFFF",
       highlight: {
-        border: "#AE80E6"
+        border: "#48298C"
       }
     },
     font: { color: "black" },
@@ -51,7 +51,7 @@ var options = {
     
   },
   edges: {
-    color: "#AE80E6"
+    color: "#48298C"
   },
 };
 

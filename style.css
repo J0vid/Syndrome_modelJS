@@ -31,13 +31,13 @@ body {background-color: #e5e5e5; }
 
 .form-floating > label {
   padding: 1%;
-  color:#AE80E6;
+  color:#48298C;
   font-size: large;
 }
 
 label {
   padding: 1%;
-  color:#AE80E6;
+  color:#48298C;
   font-size: large;
 }
 
@@ -67,7 +67,7 @@ label {
   line-height: 20px;
   text-align: center;
   border-radius: 3px;
-  background: #AE80E6;
+  background: #48298C;
   padding: 5px 1px;
   margin-left: 3px;
 }
@@ -79,9 +79,30 @@ label {
   width: 0;
   height: 0;
   border-top: 7px solid transparent;
-  border-right: 7px solid #AE80E6;
+  border-right: 7px solid #48298C;
   border-bottom: 7px solid transparent;
   content: '';
+}
+
+.range-slider2 {
+  width: 100%;
+}
+
+.range-slider__range2 {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #e5e5e5;
+  outline: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+.slider_bookend {
+background: #48298C;
+color: #fcfcfc;
 }
 
 /* // Firefox Overrides */
@@ -99,7 +120,7 @@ input::-moz-focus-outer {
 .nav-item > button:hover {
     border-radius: 20px 20px 0px 0px;
     border-color: #fcfcfc;
-    color: #AE80E6;
+    color: #48298C;
     border-top-width: 2px;
     border-right-width: 2px;
     border-left-width: 2px;
@@ -115,7 +136,7 @@ input::-moz-focus-outer {
     border-radius: 20px 20px 0px 0px;
     background-color: #fcfcfc;
     border-color: #fcfcfc;
-    color: #AE80E6
+    color: #48298C
 
 }
 
