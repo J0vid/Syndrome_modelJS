@@ -52,12 +52,14 @@ window.onresize = function() {network.fit();}
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
+    scene.getEngine().resize();
     scene.render();
 });
 
-// engine2.runRenderLoop(function () {
-//     comparisonScene.render();
-// });
+engine2.runRenderLoop(function () {
+    comparisonScene.getEngine().resize();
+    comparisonScene.render();
+});
 
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
