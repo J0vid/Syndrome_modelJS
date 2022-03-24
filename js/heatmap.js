@@ -103,11 +103,11 @@ dot = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);
 function updateHeatmap(tmpValue) {
 
     compStart = comparisonScene.getMeshByName(document.getElementById("referenceComp").value)
-    compCurrent = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+    compCurrent = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(1);
     compCurrent.influence = compSlider.value/100
 
     ex_mesh = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value);
-    currentInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
+    currentInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);
 
     //currentInfluence = myInfluence//ex_mesh.morphTargetManager.getTarget(0); 
 
@@ -147,8 +147,8 @@ function updateHeatmap(tmpValue) {
 
     //console.log(diff_mesh) //are there differences between the meshes?
 
-    var start = -.0005 //arrayMin(diff_mesh)
-    var end = .0005 //arrayMax(diff_mesh)
+    var start = arrayMin(diff_mesh)
+    var end = arrayMax(diff_mesh)
     var diff = ((end - start) / (2 * nsteps));
 
     // console.log(2*nsteps)

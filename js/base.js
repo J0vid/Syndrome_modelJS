@@ -55,9 +55,9 @@ engine.runRenderLoop(function () {
     scene.render();
 });
 
-engine2.runRenderLoop(function () {
-    comparisonScene.render();
-});
+// engine2.runRenderLoop(function () {
+//     comparisonScene.render();
+// });
 
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
@@ -86,9 +86,9 @@ selectedSyndrome2.onchange = function() {
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
  
-    refMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+    refMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
     
-        refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+        refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(1);
 
         document.getElementById("compAgeSlider").min = parseInt(refInfluence.name.split("_")[1])
         document.getElementById("compAgeSlider").max = parseInt(refInfluence.name.split("_")[2])
@@ -97,15 +97,20 @@ selectedSyndrome2.onchange = function() {
 
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
+
+        if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
+            updateHeatmap();
+        } 
     }) //end loader
 
-    compMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
-        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);    
+
+    compMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
     }) //end loader
 
-    
+   
 }
 
 var selectedSyndromeComp = document.getElementById("syndromeComp");
@@ -115,7 +120,7 @@ selectedSyndromeComp.onchange = function() {
  
     refMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
     
-        refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+        refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(1);
 
         document.getElementById("compAgeSlider").min = parseInt(refInfluence.name.split("_")[1])
         document.getElementById("compAgeSlider").max = parseInt(refInfluence.name.split("_")[2])
@@ -125,13 +130,10 @@ selectedSyndromeComp.onchange = function() {
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
 
-        if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
-            updateHeatmap(refInfluence.influence);
-        } 
     }) //end loader
 
-    compMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/J0vid/genopheno_site/main/images/mesh_assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
-        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);    
+    compMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+        compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
 
@@ -139,7 +141,7 @@ selectedSyndromeComp.onchange = function() {
             updateHeatmap(compInfluence.influence);
         } 
     }) //end loader
-
+    
 }
 
 // Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
