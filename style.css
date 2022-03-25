@@ -117,6 +117,23 @@ input::-moz-focus-outer {
   border: 0; 
 }
 
+/* submission well */
+
+#meshUpload.btn {
+  border: #e5e5e5;
+  border-style: solid;
+  border-width: thin;
+  color:#48298C;
+}
+
+#meshUpload.btn:hover {
+  border: #e5e5e5;
+  border-style: solid;
+  border-width: thin;
+  color:#e5e5e5;
+  background-color: #48298C;
+}
+
 /* Main window styling */
 .nav-item > button:hover {
     border-radius: 20px 20px 0px 0px;
@@ -190,6 +207,18 @@ input::-moz-focus-outer {
 .draglayer{
   height:100%;
 }
+
+/* submission tab styling */
+#submissionCanvas{
+  margin: 0 auto;
+  border-radius: 0px 20px 20px 20px;
+  box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
+  width: 90%;
+  height: 45%;
+  touch-action: none;
+}
+
+
 img{
   border-radius: 40px;
 }

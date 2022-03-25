@@ -2,13 +2,13 @@
  var DIR = "./images/mod_images/";
 
  var nodes = new vis.DataSet([
-    {id: 1, label: 'face', shape: "circularImage", image: DIR + "mod1.png", x: -500, y: -800},
-    {id: 2, label: 'posterior_mandible', shape: "circularImage", image: DIR + "mod2.png" },
-    {id: 3, label: 'nose', shape: "circularImage", image: DIR + "mod3.png" },
-    {id: 4, label: 'anterior_mandible', shape: "circularImage", image: DIR + "mod4.png" },
-    {id: 5, label: 'brow', shape: "circularImage", image: DIR + "mod5.png" },
-    {id: 6, label: 'zygomatic', shape: "circularImage", image: DIR + "mod6.png" },
-    {id: 7, label: 'premaxilla', shape: "circularImage", image: DIR + "mod7.png" }
+    {id: 1, label: 'Face', shape: "circularImage", image: DIR + "mod1.png", x: -500, y: -800},
+    {id: 2, label: 'Posterior mandible', shape: "circularImage", image: DIR + "mod2.png" },
+    {id: 3, label: 'Nose', shape: "circularImage", image: DIR + "mod3.png" },
+    {id: 4, label: 'Anterior mandible', shape: "circularImage", image: DIR + "mod4.png" },
+    {id: 5, label: 'Brow', shape: "circularImage", image: DIR + "mod5.png" },
+    {id: 6, label: 'Zygomatic', shape: "circularImage", image: DIR + "mod6.png" },
+    {id: 7, label: 'Premaxilla', shape: "circularImage", image: DIR + "mod7.png" }
 ]);
 
 // create an array with edges
@@ -36,7 +36,7 @@ var options = {
   clickToUse: false,
   nodes: {
     borderWidth: 4,
-    size: 30,
+    size: 40,
     color: {
       border: "#48298C",
       background: "#6AAFFF",
@@ -44,7 +44,10 @@ var options = {
         border: "#48298C"
       }
     },
-    font: { color: "black" },
+    font: { 
+      color: "black",
+      size: 20
+   },
     shapeProperties: {
       useBorderWithImage: true,
     },
