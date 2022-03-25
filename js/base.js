@@ -16,9 +16,16 @@ const createScene = function () {
     const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 750, new BABYLON.Vector3(0, 15, 0));
 
     camera.attachControl(canvas, true);
-    camera.fov = 0.5;
-    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(100, 100, 0));
+    camera.fov = .75;
+    camera.allowUpsideDown = false;
+    camera.upperAlphaLimit = Math.PI;
+    camera.lowerAlphaLimit = 0;
+    camera.upperRadiusLimit = 450;
+    camera.lowerRadiusLimit = 100;
 
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 0, 100));
+    const light2 = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(40, 40, 100));
+    
     return scene;
 };
 
@@ -32,8 +39,15 @@ const createScene1 = function () {
     const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 750, new BABYLON.Vector3(0, 15, 0));
 
     camera.attachControl(comparisonCanvas, true);
-    camera.fov = 0.5;
-    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
+    camera.fov = .75;
+    camera.allowUpsideDown = false;
+    camera.upperAlphaLimit = Math.PI;
+    camera.lowerAlphaLimit = 0;
+    camera.upperRadiusLimit = 450;
+    camera.lowerRadiusLimit = 100;
+
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 0, 100));
+    const light2 = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(40, 40, 100));
 
     return scene1;
 };
@@ -64,7 +78,6 @@ engine2.runRenderLoop(function () {
 
 // Define selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
-
 selectedSyndrome.onchange = function() {
     //delete last parent mesh before loading new one
     scene.getMeshByName("__root__").dispose()
@@ -81,12 +94,21 @@ selectedSyndrome.onchange = function() {
         myInfluence.influence = document.getElementById("ageSlider").value/100
 
         sevInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
-        document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 200
-        document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 200
+        document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 700
+        document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 700
         document.getElementById("sevSlider").value = 0
-
+        
+        genericTexture = scene.getMeshByName(document.getElementById("syndrome").value).getVerticesData(BABYLON.VertexBuffer.ColorKind)
 
     }) //end loader
+
+    
+}
+
+//define selected texture
+var selectedTexture = document.getElementById("texture");
+selectedTexture.onchange = function() {
+    updateTexture(selectedTexture.value);
 }
 
 var selectedSyndrome2 = document.getElementById("referenceComp");
@@ -232,6 +254,7 @@ document.getElementById("sexSlider").value = 0
 document.getElementById("sevSlider").value = 0
 document.getElementById("referenceComp").value = " "
 document.getElementById("syndromeComp").value = " "
+document.getElementById("texture").value = "generic1"
 document.getElementById("Gestalts-tab").className = 'nav-link show active'
 
 changeWell('gestaltContainer')
@@ -249,8 +272,10 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
     myInfluence.influence = document.getElementById("ageSlider").value/100
 
     sevInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
-    document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 200
-    document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 200
+    document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 700
+    document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 700
+
+    genericTexture = scene.getMeshByName(document.getElementById("syndrome").value).getVerticesData(BABYLON.VertexBuffer.ColorKind)
 
 }) //end loader
 

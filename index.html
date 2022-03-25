@@ -28,14 +28,14 @@
    
 </head>
 <body>
-    <div class="row ps-3">
+    <div class="row ps-4 mx-auto">
         <div class="col-md-3 mt-5 mx-auto">
 
             <div class="well p-3">
                 <div class="container" id="gestaltContainer">
                         <div class="form-floating">
                         <label for="syndrome">Syndrome</label>
-                        <select name="syndrome" id="syndrome" class="form-select" aria-label="Floating label select example">
+                        <select name="syndrome" id="syndrome" class="form-select" aria-label="Syndrome gestalt select">
                             <option value="1p36 Deletion">1p36 Deletion</option>
                             <option value="5p Deletion Cri du Chat">5p Deletion Cri du Chat</option>
                             <option value="15q Duplication">15q Duplication</option>
@@ -140,7 +140,17 @@
                             <input class="range-slider__range2" id="sevSlider" type="range" value="0" min="-6" max="6">
                             <!-- <span class="range-slider_bookend" id="sevSliderLabel">0</span> -->
                         </div> 
-                        
+                        <br>
+                        <div class="form-floating">
+                            <label for="texture">Texture</label>
+                        <select name="texture" id="texture" class="form-select" aria-label="Texture select">
+                            <option value="generic1">Generic (default)</option>
+                            <option value="generic2">Generic option 2</option>
+                            <option value="lightgrey">Lightgrey</option>
+                            <option value="generic2">Generic (default) + gestalt</option>
+                            <option value="generic2">Generic 2 + gestalt</option>
+                            </select>
+                        </div>
                 </div>
                 <div class="comparisonContainer" id="comparisonContainer">
                     <div class="form-floating">
@@ -378,6 +388,7 @@
 
 <script src="js/base.js"></script>
 <script src="js/heatmap.js"></script>
+<script src="js/updateTexture.js"></script>
 <script src="js/visnetwork.js"></script>
 
 </body>
