@@ -170,7 +170,7 @@ function updateHeatmap(tmpValue) {
     for(var p = 0; p < diff_mesh.length; p++) {
         //for(var p = 0; p < 9 / 3; p++) {
 
-        //We have to index colors based on the current node: network.getSelectedNodes()
+        //We have to index colors based on the current node: network.getSelectedNodes()[0]
 
         //assign colors to value p based on nearest bin
         diff_bins = [];

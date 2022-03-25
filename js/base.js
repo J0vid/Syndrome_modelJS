@@ -111,6 +111,7 @@ selectedTexture.onchange = function() {
     updateTexture(selectedTexture.value);
 }
 
+
 var selectedSyndrome2 = document.getElementById("referenceComp");
 selectedSyndrome2.onchange = function() {
     //if either ref or comp change, delete last parent meshes and load new ones
@@ -139,9 +140,11 @@ selectedSyndrome2.onchange = function() {
         compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
-    }) //end loader
 
-   
+        if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
+            updateHeatmap();
+        } 
+    }) //end loader
 }
 
 var selectedSyndromeComp = document.getElementById("syndromeComp");
@@ -161,17 +164,22 @@ selectedSyndromeComp.onchange = function() {
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
 
+        if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
+            updateHeatmap();
+        } 
     }) //end loader
 
     compMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
         compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
-
+        
         if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
-            updateHeatmap(compInfluence.influence);
+            updateHeatmap();
         } 
     }) //end loader
+
+  
     
 }
 
@@ -293,11 +301,3 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
 // }) //end loader
 
 // engine2.resize(); //resize comp window...maybe save for when it's rendered?
-
-// Vanilla
-// var httpRequest = new XMLHttpRequest()
-// httpRequest.onreadystatechange = function (data) {
-//   // code
-// }
-// httpRequest.open('GET', 'genopheno.ucalgary.ca/api/Gestalt/predPC')
-// httpRequest.send()

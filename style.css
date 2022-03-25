@@ -177,6 +177,16 @@ input::-moz-focus-outer {
     background-color: #fcfcfc;
 }
 
+#similarityScores {
+  margin: 0 auto;
+  width: 70%;
+  height: 40%;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
+  background-color: #fcfcfc;
+  overflow: hidden;
+}
+
 img{
   border-radius: 40px;
 }
