@@ -43,3 +43,10 @@ submissionEngine.runRenderLoop(function () {
 //load defult mesh for the moment
 submittedMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", "jovid.glb", submissionScene)
 
+//api call for mesh on file input
+
+//api call for person-specific gestalt
+
+//plotly syndrome bar plot
+
+//plotly personal morphospace

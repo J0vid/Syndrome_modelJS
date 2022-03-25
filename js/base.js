@@ -218,21 +218,31 @@ compSlider.oninput = function() {
 function changeWell(divName){
 
     if(divName === 'gestaltContainer'){
-    document.getElementById("gestaltContainer").style.display = ""
-    document.getElementById("comparisonContainer").style.display = "none"
-    document.getElementById("submissionContainer").style.display = "none"
-    }
+        document.getElementById("gestaltContainer").style.display = ""
+        document.getElementById("comparisonContainer").style.display = "none"
+        document.getElementById("submissionContainer").style.display = "none"
+        document.getElementById("aboutContainer").style.display = "none"
+        }
 
     if(divName === 'comparisonContainer'){
         document.getElementById("gestaltContainer").style.display = "none"
         document.getElementById("comparisonContainer").style.display = ""
-        document.getElementById("submissionContainer").style.display = "none"
+        document.getElementById("submissionContainer").style.display = "none"    
+        document.getElementById("aboutContainer").style.display = "none"
         }
 
     if(divName === 'submissionContainer'){
         document.getElementById("gestaltContainer").style.display = "none"
         document.getElementById("comparisonContainer").style.display = "none"
         document.getElementById("submissionContainer").style.display = ""
+        document.getElementById("aboutContainer").style.display = "none"
+        }      
+
+    if(divName === 'aboutContainer'){
+        document.getElementById("gestaltContainer").style.display = "none"
+        document.getElementById("comparisonContainer").style.display = "none"
+        document.getElementById("submissionContainer").style.display = "none"
+        document.getElementById("aboutContainer").style.display = ""
         }  
 }
 

@@ -342,11 +342,21 @@
                     <div class="input-group">
                         <input type="file" class="form-control" id="meshUpload" aria-describedby="meshUpload" aria-label="Upload">
                         <button class="btn btn-outline-secondary" type="button" id="meshUpload">Upload</button>
-                      </div>
-                      <br>
+                    </div>
+                    <br>
+                    <div class="form-row input-group mb-3">
+                        <span class="input-group-text" id="ageInputLabel">Age</span>
+                        <input type="text" class="form-control" id="ageInput" placeholder="12" aria-label="12" aria-describedby="age-input">
+                        <span class="input-group-text" id="ageInputLabel">Sex</span>
+                        <select name="submissionSex" id="submissionSex" class="form-select">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                        <br> 
+                    </div>
                     <div class="form-floating">
                         <label for="submissionComp">Syndrome</label>
-                    <select name="submissionComp" id="submissionComp" class="form-select">
+                        <select name="submissionComp" id="submissionComp" class="form-select">
                         <option selected> </option>
                         <option value="1p36 Deletion">1p36 Deletion</option>
                         <option value="5p Deletion Cri du Chat">5p Deletion Cri du Chat</option>
@@ -432,6 +442,9 @@
                     </select>
                     </div>
                 </div>
+                <div class="aboutContainer pt-2 pb-2" id="aboutContainer">
+                    
+                </div>
             </div>
         </div>
 
@@ -449,7 +462,7 @@
                             <button class="nav-link" id="Submitted-tab" data-bs-toggle="tab" data-bs-target="#Submitted" type="button" role="tab" aria-controls="Submitted" aria-selected="false" onclick="changeWell('submissionContainer')">Submit Face</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="About-tab" data-bs-toggle="tab" data-bs-target="#About" type="button" role="tab" aria-controls="About" aria-selected="false">About</a>
+                            <button class="nav-link" id="About-tab" data-bs-toggle="tab" data-bs-target="#About" type="button" role="tab" aria-controls="About" aria-selected="false" onclick="changeWell('aboutContainer')">About</a>
                         </li>
                     </ul>
                     
@@ -475,6 +488,9 @@
                         </div>
                         <div class="tab-pane fade" id="Submitted" role="tabpanel" aria-labelledby="Submitted-tab">
                             <canvas id="submissionCanvas" touch-action="none"></canvas>  
+                        </div>
+                        <div class="tab-pane fade" id="About" role="tabpanel" aria-labelledby="About-tab">
+                            ...
                         </div>
                     </div>     
                 </div>

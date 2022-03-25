@@ -152,9 +152,9 @@ input::-moz-focus-outer {
 
 .nav-tabs .nav-link.active{
     border-radius: 20px 20px 0px 0px;
-    background-color: #fcfcfc;
-    border-color: #fcfcfc;
-    color: #48298C
+    background-color: #48298C;
+    border-color: #48298C;
+    color: #fcfcfc
 
 }
 
