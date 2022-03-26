@@ -25,17 +25,25 @@ fetch('http://127.0.0.1:7833/similarity_scores?reference=' + encodeURIComponent(
         for(var i = 0; i < data.subregion_scores.length; i++) {
         subregionScores.push(data.subregion_scores[i].face_score)
         wholefaceScores.push(data.wholeface_scores[i].face_score)
-        syndNames.push(data.subregion_scores[i].Syndrome)
+        if(i < 5 | i > 85){
+          syndNames.push(data.subregion_scores[i].Syndrome)
+        } else {
+          syndNames.push(" ")
+        }
         }
 
         //figure out 5 biggest/smallest subregion scores and annotate
-
         var scoreData = [{
             x: subregionScores,
             y: wholefaceScores,
-            mode: 'markers',
+            mode: 'markers+text',
             type: 'scatter',
             text: syndNames,
+            textposition: 'top',
+                    textfont: {
+                        color: '#48298C',
+                        size: 8
+                    },
             marker: {
                 color: '#48298C'
             }
@@ -45,6 +53,9 @@ fetch('http://127.0.0.1:7833/similarity_scores?reference=' + encodeURIComponent(
             margin: { t: 0 }, 
             autosize: true,
             xaxis: {
+              range: [-.02, .11],
+              zeroline: false,
+              automargin: true,
               title: {
                 text: 'Subregion scores',
                 font: {
