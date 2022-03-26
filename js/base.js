@@ -272,6 +272,15 @@ var rangeSlider = function(){
 
   rangeSlider2();
   
+//personal heatmap
+// var personalHeatmap = document.getElementById("submissionComp");
+// personalHeatmap.onchange = function() {
+//     if(document.getElementById("Submitted-tab").className === 'nav-link active') {
+//         updatePersonalHeatmap(submissionScene.meshes[1], submissionScene.meshes[3]);
+//     } 
+// }
+
+
 // Set some startup values
 document.getElementById("syndrome").value =  "Achondroplasia"
 document.getElementById("sexSlider").value = 0

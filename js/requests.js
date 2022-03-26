@@ -85,15 +85,19 @@ submittedSyndromeComp.onchange = function() {
             // console.log(data)
             BABYLON.SceneLoaderFlags.ShowLoadingScreen = false;
             var base64_model_content = "data:;base64," + data
-            meshTest = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene)
-    })
-    
+            meshTest = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene, function(){
+                //update personal heatmap
+                submissionScene.meshes[3].setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
+
+                personalHeatmap();
+            })
+    })  
 }
 
 //api call for mesh on file input
 // var submitMesh = document.getElementById("meshUpload");
 registerMesh = () => {
-    console.log("click");
+    // console.log("click");
     //delete last parent mesh before loading new one
     if (submissionScene.meshes.length > 0)
         submissionScene.getMeshByName("__root__").dispose();
@@ -108,15 +112,16 @@ registerMesh = () => {
             BABYLON.SceneLoaderFlags.ShowLoadingScreen = false;
             var base64_model_content = "data:;base64," + data;
             personalMesh = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene, function(){
+              
                 //get classifier bar plot
                 fetch('http://127.0.0.1:7833/classifyMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value)
                 .then(function (body) {
                     return body.json(); // <--- THIS PART WAS MISSING
                 })
                 .then(data => {
-                  console.log(data)
-                  console.log(data.length)
-                  console.log(data[0][0])
+                  // console.log(data)
+                  // console.log(data.length)
+                  // console.log(data[0][0])
                    
                   probabilities = [];
                   syndNames = [];
@@ -211,22 +216,12 @@ registerMesh = () => {
                       }
                     }
                   };
-        
                 Plotly.newPlot(personalMorphospace, scoreDataPersonal, layout);
                 })
-                
-                
-
             });
-
-            //if the syndromic mesh is selected, run the heatmap function
         });
 
 }
 
-
-//plotly syndrome bar plot
-
-//plotly personal morphospace
 
 

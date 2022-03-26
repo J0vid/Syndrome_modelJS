@@ -186,12 +186,76 @@ function updateHeatmap(tmpValue) {
    
     }
 
-
     return(comparisonScene.getMeshByName(document.getElementById("referenceComp").value).setVerticesData(BABYLON.VertexBuffer.ColorKind, colors))
 
 }
                     
-                    
+function personalHeatmap() {
+
+   //need vertices of inputMesh and comparisonMesh as well as normals of inputMesh
+    x = submissionScene.meshes[3].getVerticesData('position')
+    startNormals = submissionScene.meshes[3].getVerticesData('normal')
+    y = submissionScene.meshes[1].getVerticesData('position')
+
+    //calculate diffs between meshes
+    diff_mesh_raw = [];
+
+    for(var p = 0; p <= x.length; p++) {
+        diff_mesh_raw.push(x[p] - y[p]) //mesh differences raw
+    }
+
+    diff_mesh = [];
+
+    for(var p = 0; p <= x.length / 3; p++) {
+        tmp_diffs = [diff_mesh_raw[((1+p)*3)-3], diff_mesh_raw[((1+p)*3)-2], diff_mesh_raw[((1+p)*3)-1]]
+        tmp_normal = [startNormals[((1+p)*3)-3], startNormals[((1+p)*3)-2], startNormals[((1+p)*3)-1]]
+        diff_mesh.push(dot(tmp_diffs, tmp_normal))
+    }
+
+    // console.log(diff_mesh) //are there differences between the meshes?
+
+    var start = arrayMin(diff_mesh)
+    var end = arrayMax(diff_mesh)
+    var diff = ((end - start) / (2 * nsteps));
+
+    // console.log(2*nsteps)
+    // console.log((2*nsteps)-1)
+
+    bins = [];
+    bins[0] = start;
+    for(var i=1; i<=(2*nsteps)-1; i++){
+        bins.push(bins[i-1] + diff);
+    }
+
+    //console.log(arrayMin(diff_mesh))
+    // console.log(bins)
+    //console.log(Math.abs(bins[0] - diff_mesh[0]))
+
+    //calculate final colors and push to mesh
+    colors = [];
+
+    for(var p = 0; p < diff_mesh.length; p++) {
+        //for(var p = 0; p < 9 / 3; p++) {
+
+        //We have to index colors based on the current node: network.getSelectedNodes()[0]
+
+        //assign colors to value p based on nearest bin
+        diff_bins = [];
+        for(var i = 0; i < bins.length; i++) {
+        diff_bins.push(Math.abs(bins[i] - diff_mesh[p]))
+        // console.log(bins[i])
+        //console.log(diff_mesh[p])
+        }
+
+        tmp_color = gradient[whichMin(diff_bins)];
+
+        colors.push(hexToRgb(tmp_color).r/255, hexToRgb(tmp_color).g/255, hexToRgb(tmp_color).b/255, 1);
+    }
+    // console.log(colors)
+
+    return(submissionScene.meshes[1].setVerticesData(BABYLON.VertexBuffer.ColorKind, colors))
+
+}               
 
 
                    

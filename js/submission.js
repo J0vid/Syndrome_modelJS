@@ -1,5 +1,4 @@
 const submissionCanvas = document.getElementById("submissionCanvas"); // Get the canvas element
-
 const submissionEngine = new BABYLON.Engine(submissionCanvas, true); // Generate the BABYLON 3D engine
                     
 const createSubmissionScene = function () {
