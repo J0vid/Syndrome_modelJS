@@ -182,11 +182,8 @@ function updateHeatmap(tmpValue) {
 
         tmp_color = gradient[whichMin(diff_bins)];
 
-        if(p > 27000){
-            colors.push(hexToRgb(tmp_color).r/255, hexToRgb(tmp_color).g/255, hexToRgb(tmp_color).b/255, 1);
-        } else {
-            colors.push(211/255, 211/255, 211/255, 1);
-        }
+        colors.push(hexToRgb(tmp_color).r/255, hexToRgb(tmp_color).g/255, hexToRgb(tmp_color).b/255, 1);
+   
     }
 
 

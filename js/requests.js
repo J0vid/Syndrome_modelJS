@@ -54,6 +54,7 @@ fetch('http://127.0.0.1:7833/similarity_scores?reference=' + encodeURIComponent(
               },
             },
             yaxis: {
+              automargin: true,
               title: {
                 text: 'Face scores',
                 font: {
@@ -108,21 +109,21 @@ registerMesh = () => {
             var base64_model_content = "data:;base64," + data;
             personalMesh = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene, function(){
                 //get classifier bar plot
-                fetch('http://127.0.0.1:7833/classifyMesh')
+                fetch('http://127.0.0.1:7833/classifyMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value)
                 .then(function (body) {
                     return body.json(); // <--- THIS PART WAS MISSING
                 })
                 .then(data => {
-                  // console.log(data)
-                  // console.log(data.length)
-                  // console.log(data[0])
+                  console.log(data)
+                  console.log(data.length)
+                  console.log(data[0][0])
                    
                   probabilities = [];
                   syndNames = [];
 
-                  for(var i = 0; i < data.length; i++) {
-                  probabilities.push(data[i].Probs)
-                  syndNames.push(data[i].Syndrome)
+                  for(var i = 0; i < data[0].length; i++) {
+                  probabilities.push(data[0][i].Probs)
+                  syndNames.push(data[0][i].Syndrome)
                   }
 
                   var scoreData = [{
@@ -160,9 +161,61 @@ registerMesh = () => {
                     };
 
                   Plotly.newPlot(hdrdaResult, scoreData, layout);
+
+                  //get personal morphospace plot
+                  personalScores = [];
+                  personalScores2 = [];
+                  personalSyndNames = [];
+
+                  for(var i = 0; i < data[1].length; i++) {
+                  personalScores.push(data[1][i].Scores1)
+                  personalScores2.push(data[1][i].Scores2)
+                  syndNames.push(data[1][i].Syndrome)
+                  }
+
+                  markerColors = Array(90).fill('#48298C')
+                  markerColors.splice(0, 0, "red")
+
+                  var scoreDataPersonal = [{
+                    x: personalScores,
+                    y: personalScores2,
+                    mode: 'markers',
+                    type: 'scatter',
+                    text: syndNames,
+                    marker: {
+                        color: markerColors,
+                        size: 9
+                    }
+                }]
+        
+                var layout = {
+                    margin: { t: 0 }, 
+                    autosize: true,
+                    xaxis: {
+                      title: {
+                        text: 'PC1 score',
+                        font: {
+                          size: 15,
+                          color: markerColors
+                        }
+                      },
+                    },
+                    yaxis: {
+                      automargin: true,
+                      title: {
+                        text: 'PC2 score',
+                        font: {
+                          size: 15,
+                          color: '#48298C'
+                        }
+                      }
+                    }
+                  };
+        
+                Plotly.newPlot(personalMorphospace, scoreDataPersonal, layout);
                 })
                 
-                //get personal morphospace plot
+                
 
             });
 
