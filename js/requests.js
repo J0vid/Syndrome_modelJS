@@ -11,10 +11,10 @@ function getScores(){
 // console.log(httpRequest.response)
 // return(httpRequest.response)
 
-fetch('http://127.0.0.1:7181/similarity_scores?reference=' + encodeURIComponent(document.getElementById("referenceComp").value) + '&synd_comp=' + document.getElementById("syndromeComp").value + '&facial_subregion=' + network.getSelectedNodes()[0])
+fetch('http://127.0.0.1:7833/similarity_scores?reference=' + encodeURIComponent(document.getElementById("referenceComp").value) + '&synd_comp=' + document.getElementById("syndromeComp").value + '&facial_subregion=' + network.getSelectedNodes()[0])
   .then(response => response.json())
   .then(data => {
-        console.log(data.subregion_scores.length)
+        console.log(data)
         console.log(data.subregion_scores[0].face_score)
         syndSimilarity = document.getElementById('similarityScores');
 
@@ -67,3 +67,113 @@ fetch('http://127.0.0.1:7181/similarity_scores?reference=' + encodeURIComponent(
         Plotly.newPlot(syndSimilarity, scoreData, layout);
     });
 }
+
+
+
+var submittedSyndromeComp = document.getElementById("submissionComp");
+submittedSyndromeComp.onchange = function() {
+    //delete last parent mesh before loading new one
+    if(submissionScene.meshes.length > 2) submissionScene.getMeshByName("__root__").dispose()
+    
+    //api call for person-specific gestalt
+    fetch('http://127.0.0.1:7833/predshapeMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value + '&selected.synd=' + document.getElementById('submissionComp').value + '&selected.severity=Typical&type=stream')
+        .then(function(body){
+            return body.text(); // <--- THIS PART WAS MISSING
+        })
+        .then(data => {
+            // console.log(data)
+            BABYLON.SceneLoaderFlags.ShowLoadingScreen = false;
+            var base64_model_content = "data:;base64," + data
+            meshTest = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene)
+    })
+    
+}
+
+//api call for mesh on file input
+// var submitMesh = document.getElementById("meshUpload");
+registerMesh = () => {
+    console.log("click");
+    //delete last parent mesh before loading new one
+    if (submissionScene.meshes.length > 0)
+        submissionScene.getMeshByName("__root__").dispose();
+
+    //api call for person-specific gestalt
+    fetch('http://127.0.0.1:7833/registerMesh')
+        .then(function (body) {
+            return body.text(); // <--- THIS PART WAS MISSING
+        })
+        .then(data => {
+            // console.log(data);
+            BABYLON.SceneLoaderFlags.ShowLoadingScreen = false;
+            var base64_model_content = "data:;base64," + data;
+            personalMesh = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene, function(){
+                //get classifier bar plot
+                fetch('http://127.0.0.1:7833/classifyMesh')
+                .then(function (body) {
+                    return body.json(); // <--- THIS PART WAS MISSING
+                })
+                .then(data => {
+                  // console.log(data)
+                  // console.log(data.length)
+                  // console.log(data[0])
+                   
+                  probabilities = [];
+                  syndNames = [];
+
+                  for(var i = 0; i < data.length; i++) {
+                  probabilities.push(data[i].Probs)
+                  syndNames.push(data[i].Syndrome)
+                  }
+
+                  var scoreData = [{
+                      x: syndNames,
+                      y: probabilities,
+                      type: 'bar',
+                      marker: {
+                        color: '#e5e5e5'
+                      }
+                  }]
+            
+                  var layout = {
+                      margin: { 
+                        t: 0
+                       },
+                       pad:{
+                        r: 50
+                       }, 
+                      autosize: true,
+                      xaxis:{
+                        automargin: true,
+                        tickfont: {
+                          size:14,
+                          color: '#48298C'}
+                      },
+                      yaxis: {
+                        title: {
+                          text: 'Posterior probability',
+                          font: {
+                            size: 14,
+                            color: '#48298C'
+                          }
+                        }
+                      }
+                    };
+
+                  Plotly.newPlot(hdrdaResult, scoreData, layout);
+                })
+                
+                //get personal morphospace plot
+
+            });
+
+            //if the syndromic mesh is selected, run the heatmap function
+        });
+
+}
+
+
+//plotly syndrome bar plot
+
+//plotly personal morphospace
+
+

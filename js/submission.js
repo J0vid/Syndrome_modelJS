@@ -39,30 +39,3 @@ submissionEngine.runRenderLoop(function () {
     submissionScene.render();
 });
 
-var submittedSyndromeComp = document.getElementById("submissionComp");
-submittedSyndromeComp.onchange = function() {
-    //delete last parent mesh before loading new one
-    if(submissionScene.meshes.length > 2) submissionScene.getMeshByName("__root__").dispose()
-    
-    //api call for person-specific gestalt
-    fetch('http://127.0.0.1:7181/predshapeMeshGLB?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value + '&selected.synd=' + document.getElementById('submissionComp').value + '&selected.severity=Typical')
-        .then(function(body){
-            return body.text(); // <--- THIS PART WAS MISSING
-        })
-        .then(data => {
-            
-            BABYLON.SceneLoaderFlags.ShowLoadingScreen = false;
-            var base64_model_content = "data:;base64," + data
-            meshTest = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene)
-
-    })
-    
-}
-
-//api call for mesh on file input
-
-
-
-//plotly syndrome bar plot
-
-//plotly personal morphospace

@@ -204,6 +204,16 @@ input::-moz-focus-outer {
   overflow: hidden;
 }
 
+#hdrdaResult {
+  margin: 0 auto;
+  width: 80%;
+  height: 40%;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
+  background-color: #fcfcfc;
+  overflow: hidden;
+}
+
 .draglayer{
   height:100%;
 }
