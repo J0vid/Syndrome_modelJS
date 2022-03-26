@@ -10,7 +10,7 @@ const createScene = function () {
     const scene = new BABYLON.Scene(engine);  
     scene.useRightHandedSystem = false;
     
-    // const axes = new BABYLON.AxesViewer(scene, 70);
+    const axes = new BABYLON.AxesViewer(scene, 70);
 
     scene.clearColor = new BABYLON.Color4(0.988, 0.988, 0.988);
     const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * .5, Math.PI * .5, 750, new BABYLON.Vector3(0, 15, 0));
