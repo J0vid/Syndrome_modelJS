@@ -100,9 +100,7 @@ selectedSyndrome.onchange = function() {
         
         genericTexture = scene.getMeshByName(document.getElementById("syndrome").value).getVerticesData(BABYLON.VertexBuffer.ColorKind)
 
-    }) //end loader
-
-    
+    }) //end loader   
 }
 
 //define selected texture
