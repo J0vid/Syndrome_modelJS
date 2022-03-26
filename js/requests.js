@@ -119,7 +119,7 @@ registerMesh = () => {
                     return body.json(); // <--- THIS PART WAS MISSING
                 })
                 .then(data => {
-                  // console.log(data)
+                  console.log(data)
                   // console.log(data.length)
                   // console.log(data[0][0])
                    
@@ -184,9 +184,14 @@ registerMesh = () => {
                   var scoreDataPersonal = [{
                     x: personalScores,
                     y: personalScores2,
-                    mode: 'markers',
+                    mode: 'markers+text',
                     type: 'scatter',
                     text: syndNames,
+                    textposition: 'top',
+                    textfont: {
+                        color: markerColors,
+                        size: 8
+                    },
                     marker: {
                         color: markerColors,
                         size: 9
@@ -201,7 +206,7 @@ registerMesh = () => {
                         text: 'PC1 score',
                         font: {
                           size: 15,
-                          color: markerColors
+                          color: '#48298C'
                         }
                       },
                     },

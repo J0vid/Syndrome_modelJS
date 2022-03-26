@@ -258,22 +258,22 @@ img{
   /* For phones */
 #Gestalts > canvas{
    border-radius: 0px 20px 20px 20px;
-   width: 93.5vw;
+   width: 90vw;
 }
 
 #Comparisons > canvas{
    border-radius: 0px 20px 20px 20px;
-   width: 93.5vw;
+   width: 90vw;
 }
 
 #Submitted > canvas{
    border-radius: 0px 20px 20px 20px;
-   width: 90.5vw;
+   width: 90vw;
 }
 
 #mynetwork {
   margin: 0 auto;
-  width: 92vw;
+  width: 90vw;
   height: 40%;
   border-radius: 20px 20px 20px 20px;
   box-shadow: 12px 12px 15px 1px rgba(0,0,0,.1);
