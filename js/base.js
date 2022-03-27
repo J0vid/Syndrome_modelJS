@@ -253,11 +253,11 @@ var rangeSlider = function(){
   
       value.each(function(){
         var value = $(this).prev().attr('value');
-        $(this).html(value + " ");
+        $(this).html(value + " y/o");
       });
   
       range.on('input', function(){
-        $(this).next(value).html(this.value + " ");
+        $(this).next(value).html(this.value + " y/o");
       });
     });
   };
@@ -300,7 +300,7 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
     document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
     document.getElementById("ageSlider").max = parseInt(myInfluence.name.split("_")[2])
     document.getElementById("ageSlider").value = (parseInt(myInfluence.name.split("_")[1]) + parseInt(myInfluence.name.split("_")[2]) /2)
-    document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value
+    document.getElementById("ageSliderLabel").innerHTML = document.getElementById("ageSlider").value + " y/o"
 
     myInfluence.influence = document.getElementById("ageSlider").value/100
 

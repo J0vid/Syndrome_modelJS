@@ -11,7 +11,7 @@ function getScores(){
 // console.log(httpRequest.response)
 // return(httpRequest.response)
 
-fetch('http://127.0.0.1:7833/similarity_scores?reference=' + encodeURIComponent(document.getElementById("referenceComp").value) + '&synd_comp=' + document.getElementById("syndromeComp").value + '&facial_subregion=' + network.getSelectedNodes()[0])
+fetch('http://127.0.0.1:3438/similarity_scores?reference=' + encodeURIComponent(document.getElementById("referenceComp").value) + '&synd_comp=' + document.getElementById("syndromeComp").value + '&facial_subregion=' + network.getSelectedNodes()[0])
   .then(response => response.json())
   .then(data => {
         console.log(data)
@@ -88,7 +88,7 @@ submittedSyndromeComp.onchange = function() {
     if(submissionScene.meshes.length > 2) submissionScene.getMeshByName("__root__").dispose()
     
     //api call for person-specific gestalt
-    fetch('http://127.0.0.1:7833/predshapeMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value + '&selected.synd=' + document.getElementById('submissionComp').value + '&selected.severity=Typical&type=stream')
+    fetch('http://127.0.0.1:3438/predshapeMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value + '&selected.synd=' + document.getElementById('submissionComp').value + '&selected.severity=Typical&type=stream')
         .then(function(body){
             return body.text(); // <--- THIS PART WAS MISSING
         })
@@ -114,7 +114,7 @@ registerMesh = () => {
         submissionScene.getMeshByName("__root__").dispose();
 
     //api call for person-specific gestalt
-    fetch('http://127.0.0.1:7833/registerMesh')
+    fetch('http://127.0.0.1:3438/registerMesh')
         .then(function (body) {
             return body.text(); // <--- THIS PART WAS MISSING
         })
@@ -125,7 +125,7 @@ registerMesh = () => {
             personalMesh = BABYLON.SceneLoader.Append("", base64_model_content, submissionScene, function(){
               
                 //get classifier bar plot
-                fetch('http://127.0.0.1:7833/classifyMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value)
+                fetch('http://127.0.0.1:3438/classifyMesh?selected.sex=' + document.getElementById('submissionSex').value + '&selected.age=' + document.getElementById('ageInput').value)
                 .then(function (body) {
                     return body.json(); // <--- THIS PART WAS MISSING
                 })
