@@ -83,7 +83,7 @@ selectedSyndrome.onchange = function() {
     scene.getMeshByName("__root__").dispose()
 
     myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
-    
+        //apply current age on slider to imported mesh
         myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(1);
 
         document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
@@ -93,11 +93,16 @@ selectedSyndrome.onchange = function() {
 
         myInfluence.influence = document.getElementById("ageSlider").value/100
 
+        //reset severity slider for imported mesh
+        document.getElementById("sexSlider").value = 0
+        
+        //reset severity slider for imported mesh
         sevInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(0);
         document.getElementById("sevSlider").max = parseFloat(sevInfluence.name.split("_")[1]) * 700
         document.getElementById("sevSlider").min = -parseFloat(sevInfluence.name.split("_")[1]) * 700
         document.getElementById("sevSlider").value = 0
         
+        //apply current texture to imported mesh
         genericTexture = scene.getMeshByName(document.getElementById("syndrome").value).getVerticesData(BABYLON.VertexBuffer.ColorKind)
 
     }) //end loader   
@@ -287,6 +292,8 @@ document.getElementById("sexSlider").value = 0
 document.getElementById("sevSlider").value = 0
 document.getElementById("referenceComp").value = " "
 document.getElementById("syndromeComp").value = " "
+document.getElementById("submissionComp").value = " "
+document.getElementById("ageInput").value = "12"
 document.getElementById("texture").value = "generic1"
 document.getElementById("Gestalts-tab").className = 'nav-link show active'
 

@@ -186,22 +186,22 @@ registerMesh = () => {
                   for(var i = 0; i < data[1].length; i++) {
                   personalScores.push(data[1][i].Scores1)
                   personalScores2.push(data[1][i].Scores2)
-                  syndNames.push(data[1][i].Syndrome)
+                  personalSyndNames.push(data[1][i].Syndrome)
                   }
 
-                  markerColors = Array(90).fill('#48298C')
+                  markerColors = Array(89).fill('#48298C')
                   markerColors.splice(0, 0, "red")
-
+                  
                   var scoreDataPersonal = [{
                     x: personalScores,
                     y: personalScores2,
                     mode: 'markers+text',
                     type: 'scatter',
-                    text: syndNames,
+                    text: personalSyndNames,
                     textposition: 'top',
                     textfont: {
                         color: markerColors,
-                        size: 8
+                        size: 10
                     },
                     marker: {
                         color: markerColors,
