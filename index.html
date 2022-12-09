@@ -4,11 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Base Babylon ex</title>
+    <title>3D syndrome atlas</title>
+<!-- 
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+   -->
     
-    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <!-- <script src="https://preview.babylonjs.com/babylon.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script> -->
+
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.js"></script>
     <!-- jquery for touch interaction -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
@@ -30,13 +40,14 @@
    
 </head>
 <body>
-    <div class="row ps-4 mx-auto">
+    <div class="row mx-auto">
         <div class="col-md-3 mt-5 mx-auto">
             <div class="well p-2">
                 <div class="container pt-2 pb-2" id="gestaltContainer">
                         <div class="form-floating">
                         <label for="syndrome">Syndrome</label>
                         <select name="syndrome" id="syndrome" class="form-select" aria-label="Syndrome gestalt select">
+                            <option value="Unaffected Unrelated">Non-syndromic</option>
                             <option value="1p36 Deletion">1p36 Deletion</option>
                             <option value="5p Deletion Cri du Chat">5p Deletion Cri du Chat</option>
                             <option value="15q Duplication">15q Duplication</option>
@@ -83,7 +94,6 @@
                             <option value="Muenke Syndrome">Muenke Syndrome</option>
                             <option value="Nager Syndrome">Nager Syndrome</option>
                             <option value="Neurofibromatosis">Neurofibromatosis</option>
-                            <option value="Unrelated Unaffected">Non-syndromic</option>
                             <option value="Noonan Syndrome">Noonan Syndrome</option>
                             <option value="Opitz GBBB Syndrome">Opitz GBBB Syndrome</option>
                             <option value="Osteogenesis Imperfecta">Osteogenesis Imperfecta</option>
@@ -158,6 +168,7 @@
                         <label for="referenceComp">Reference</label>
                     <select name="referenceComp" id="referenceComp" class="form-select">
                         <option selected> </option>
+                        <option value="Unaffected Unrelated">Non-syndromic</option>
                         <option value="1p36 Deletion">1p36 Deletion</option>
                         <option value="5p Deletion Cri du Chat">5p Deletion Cri du Chat</option>
                         <option value="15q Duplication">15q Duplication</option>
@@ -204,7 +215,6 @@
                         <option value="Muenke Syndrome">Muenke Syndrome</option>
                         <option value="Nager Syndrome">Nager Syndrome</option>
                         <option value="Neurofibromatosis">Neurofibromatosis</option>
-                        <option value="Unrelated Unaffected">Non-syndromic</option>
                         <option value="Noonan Syndrome">Noonan Syndrome</option>
                         <option value="Opitz GBBB Syndrome">Opitz GBBB Syndrome</option>
                         <option value="Osteogenesis Imperfecta">Osteogenesis Imperfecta</option>
@@ -246,6 +256,7 @@
                         <label for="syndromeComp">Comparison</label>                    
                         <select name="syndromeComp" id="syndromeComp" class="form-select">
                             <option selected> </option>
+                            <option value="Unaffected Unrelated">Non-syndromic</option>
                             <option value="1p36 Deletion">1p36 Deletion</option>
                             <option value="5p Deletion Cri du Chat">5p Deletion Cri du Chat</option>
                             <option value="15q Duplication">15q Duplication</option>
@@ -292,7 +303,6 @@
                             <option value="Muenke Syndrome">Muenke Syndrome</option>
                             <option value="Nager Syndrome">Nager Syndrome</option>
                             <option value="Neurofibromatosis">Neurofibromatosis</option>
-                            <option value="Unrelated Unaffected">Non-syndromic</option>
                             <option value="Noonan Syndrome">Noonan Syndrome</option>
                             <option value="Opitz GBBB Syndrome">Opitz GBBB Syndrome</option>
                             <option value="Osteogenesis Imperfecta">Osteogenesis Imperfecta</option>
@@ -336,10 +346,11 @@
                         <span class="range-slider__value" id="compAgeSliderLabel">0</span>
                     </div> 
                 </div>
+                
                 <div class="submissionContainer pt-2 pb-2" id="submissionContainer">
                     <div class="input-group">
                         <input type="file" class="form-control" id="meshUpload" aria-describedby="meshUpload" aria-label="Upload">
-                        <button class="btn btn-outline-secondary" type="button" id="meshUpload" onclick="registerMesh()">Upload</button>
+                        <button class="btn btn-outline-secondary" type="button" id="meshUpload" onclick="uploadMesh()">Upload</button>
                     </div>
                     <br>
                     <div class="form-row input-group mb-3">
@@ -356,6 +367,7 @@
                         <label for="submissionComp">Syndrome</label>
                         <select name="submissionComp" id="submissionComp" class="form-select">
                         <option selected> </option>
+                        <option value="Unaffected Unrelated">Non-syndromic</option>
                         <option value="1p36 Deletion">1p36 Deletion</option>
                         <option value="5p Deletion Cri du Chat">5p Deletion Cri du Chat</option>
                         <option value="15q Duplication">15q Duplication</option>
@@ -402,7 +414,6 @@
                         <option value="Muenke Syndrome">Muenke Syndrome</option>
                         <option value="Nager Syndrome">Nager Syndrome</option>
                         <option value="Neurofibromatosis">Neurofibromatosis</option>
-                        <option value="Unaffected Unrelated">Non-syndromic</option>
                         <option value="Noonan Syndrome">Noonan Syndrome</option>
                         <option value="Opitz GBBB Syndrome">Opitz GBBB Syndrome</option>
                         <option value="Osteogenesis Imperfecta">Osteogenesis Imperfecta</option>
@@ -440,6 +451,7 @@
                     </select>
                     </div>
                 </div>
+
                 <div class="aboutContainer pt-2 pb-2" id="aboutContainer">
                     
                 </div>
@@ -484,6 +496,7 @@
                             <br>
                             <div id="similarityScores"></div>
                         </div>
+                     
                         <div class="tab-pane fade" id="Submitted" role="tabpanel" aria-labelledby="Submitted-tab">
                             <canvas id="submissionCanvas" touch-action="none"></canvas> 
                             <br><br>
@@ -491,14 +504,21 @@
                             <div id="personalMorphospace"></div>
 
                         </div>
+
+                        </div>
                         <div class="tab-pane fade" id="About" role="tabpanel" aria-labelledby="About-tab">
                             ...
                         </div>
                     </div>     
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
+<!-- 
+    <div class="container">
+        <video class="input_video"></video>
+        <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+      </div> -->
 
 <script src="js/base.js"></script>
 <script src="js/heatmap.js"></script>
@@ -506,6 +526,9 @@
 <script src="js/visnetwork.js"></script>
 <script src="js/requests.js"></script>
 <script src="js/submission.js"></script>
+<script src="js/throttle.js"></script>
+<!-- <script src="js/genericTexture2.js"></script> -->
+
 
 </body>
 

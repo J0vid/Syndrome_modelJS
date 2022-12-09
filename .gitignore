@@ -1,6 +1,9 @@
 .DS_Store
 *.blend
 *.blend1
+assets/
+Syndrome_model_raw_meshes/
+obfuscation/
 
 # Logs
 logs

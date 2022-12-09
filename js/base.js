@@ -24,8 +24,10 @@ const createScene = function () {
     camera.lowerRadiusLimit = 100;
 
     const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 0, 100));
-    const light2 = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(40, 40, 100));
+    const light2 = new BABYLON.PointLight("light", new BABYLON.Vector3(40, 40, 100));
     
+    light2.diffuse = new BABYLON.Color3(1, 0, 0);
+	light2.specular = new BABYLON.Color3(0, 1, 0);
     return scene;
 };
 
@@ -62,7 +64,7 @@ window.addEventListener("resize", function () {
         engine2.resize();
 });
 
-window.onresize = function() {network.fit();}
+// window.onresize = function() {network.fit();}
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
@@ -76,14 +78,15 @@ engine2.runRenderLoop(function () {
     network.fit();
 });
 
-// Define selected morphtarget
+// Define GESTALT selected morphtarget
 var selectedSyndrome = document.getElementById("syndrome");
 selectedSyndrome.onchange = function() {
     //delete last parent mesh before loading new one
     scene.getMeshByName("__root__").dispose()
 
     myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("syndrome").value + ".glb", scene, function (meshes) {
-        //apply current age on slider to imported mesh
+        
+        //set age range and value upon imported mesh
         myInfluence = scene.getMeshByName(document.getElementById("syndrome").value).morphTargetManager.getTarget(1);
 
         document.getElementById("ageSlider").min = parseInt(myInfluence.name.split("_")[1])
@@ -113,7 +116,6 @@ var selectedTexture = document.getElementById("texture");
 selectedTexture.onchange = function() {
     updateTexture(selectedTexture.value);
 }
-
 
 var selectedSyndrome2 = document.getElementById("referenceComp");
 selectedSyndrome2.onchange = function() {
@@ -178,15 +180,13 @@ selectedSyndromeComp.onchange = function() {
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
         
         if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
-            updateHeatmap();
+            throttledHeatmap();
         } 
     }) //end loader
-
   
-    
 }
 
-// Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
+// Define gestalt slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var slider = document.getElementById("ageSlider");
 slider.oninput = function() {
     tmpValue = this.value
@@ -206,7 +206,7 @@ sliderSev.oninput = function() {
 }
 
 
-// Define slider logic here because it impacts the morphtarget, the heatmap, and the scores
+// Define comparison slider logic here because it impacts the morphtarget, the heatmap, and the scores
 var compSlider = document.getElementById("compAgeSlider");
 compSlider.oninput = function() {
     tmpValue = this.value
@@ -249,41 +249,14 @@ function changeWell(divName){
         }  
 }
 
-var rangeSlider = function(){
-    var slider = $('.range-slider'),
-        range = $('.range-slider__range'),
-        value = $('.range-slider__value');
-      
-    slider.each(function(){
-  
-      value.each(function(){
-        var value = $(this).prev().attr('value');
-        $(this).html(value + " y/o");
-      });
-  
-      range.on('input', function(){
-        $(this).next(value).html(this.value + " y/o");
-      });
-    });
-  };
 
-  rangeSlider();
-
-  var rangeSlider2 = function(){
-    var slider = $('.range-slider2'),
-    range = $('.range-slider__range2'),
-    value = $('.range-slider__value2');
-  };
-
-  rangeSlider2();
-  
 //personal heatmap
-// var personalHeatmap = document.getElementById("submissionComp");
-// personalHeatmap.onchange = function() {
-//     if(document.getElementById("Submitted-tab").className === 'nav-link active') {
-//         updatePersonalHeatmap(submissionScene.meshes[1], submissionScene.meshes[3]);
-//     } 
-// }
+var personalHeatmap = document.getElementById("submissionComp");
+personalHeatmap.onchange = function() {
+    if(document.getElementById("Submitted-tab").className === 'nav-link active') {
+        updatePersonalHeatmap(submissionScene.meshes[1], submissionScene.meshes[3]);
+    } 
+}
 
 
 // Set some startup values
@@ -319,17 +292,46 @@ myMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById
 
 }) //end loader
 
-// refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
+
+refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
     
-//     refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
-// }) //end loader
+    refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+}) //end loader
 
-// compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
     
-//     //comparisonScene.getMeshByName(document.getElementById("syndromeComp")).setEnabled(false)
+    //comparisonScene.getMeshByName(document.getElementById("syndromeComp")).setEnabled(false)
 
-// compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
+compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
 
-// }) //end loader
+}) //end loader
 
 // engine2.resize(); //resize comp window...maybe save for when it's rendered?
+var rangeSlider = function(){
+    var slider = $('.range-slider'),
+        range = $('.range-slider__range'),
+        value = $('.range-slider__value');
+      
+    slider.each(function(){
+  
+      value.each(function(){
+        var value = $(this).prev().attr('value');
+        $(this).html(value + " y/o");
+      });
+  
+      range.on('input', function(){
+        $(this).next(value).html(this.value + " y/o");
+      });
+    });
+  };
+
+  rangeSlider();
+
+  var rangeSlider2 = function(){
+    var slider = $('.range-slider2'),
+    range = $('.range-slider__range2'),
+    value = $('.range-slider__value2');
+  };
+
+  rangeSlider2();
+  
