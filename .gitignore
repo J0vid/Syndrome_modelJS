@@ -4,6 +4,7 @@
 assets/
 Syndrome_model_raw_meshes/
 obfuscation/
+out/
 
 # Logs
 logs
