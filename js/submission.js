@@ -21,6 +21,8 @@ const createSubmissionScene = function () {
 
     const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 0, 100));
     const light2 = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(40, 40, 100));
+    light.intensity = .3
+    light2.intensity = .3
     
     return submissionScene;
 };

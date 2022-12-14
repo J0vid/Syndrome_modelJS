@@ -1,5 +1,8 @@
 import sys
 sys.path.append('../')
+sys.path.append('../morf')
+sys.path.append('./')
+sys.path.append('/srv/shiny-server/')
 import cv2
 import vtk
 import numpy as np
@@ -38,7 +41,7 @@ if args.debug is True:
     _image_size = 500
 else:
     from xvfbwrapper import Xvfb
-    _image_size = 224
+    _image_size = 400
 _face_distance = 800
 _landmark_ids = [36,39,27,42,45,28,29,30,33,60,51,64,57]
 # _landmark_ids = [36,48,56,57,58]
@@ -172,17 +175,17 @@ def identify_3D_landmarks(mesh):
         image = scene.captureImage()
 
         print("camera position: ", position)
-        if args.debug is True:
-                cv2.imshow("test", image)
-                cv2.waitKey(0) 
+        # if args.debug is True:
+        #         cv2.imshow("test", image)
+        #         cv2.waitKey(0) 
 
         if len(fr.face_landmarks(image)) > 0: 
             print("Face Located")
               
             landmarks_2d = identify_2D_landmarks(image)
 
-            if args.debug is True:
-                utils.check_landmarks_2d(image, landmarks_2d)  
+            # if args.debug is True:
+            #     utils.check_landmarks_2d(image, landmarks_2d)  
          
             landmarks_3d = [scene.pickPoint(point_2d) for point_2d in landmarks_2d]
             # _check_landmarks_3d(mesh[0], landmarks_3d)
@@ -208,8 +211,8 @@ def identify_3D_landmarks(mesh):
         landmarks_3d = [scene2.pickPoint(point_2d) for point_2d in landmarks_2d]
         landmarks_verts = [scene2.pickVert(point_2d) for point_2d in landmarks_2d]
 
-        if args.debug is True:
-            utils.check_landmarks_2d(image, landmarks_2d)
+        # if args.debug is True:
+        #     utils.check_landmarks_2d(image, landmarks_2d)
         #   utils.check_landmarks_3d(mesh[0], landmarks_3d)
     return [landmarks_3d[x] for x in _landmark_ids], [landmarks_verts[x] for x in _landmark_ids]
 
@@ -235,13 +238,13 @@ if args.debug is False:
 infile = filename
 outfile = landmark_dir + ".txt"
 outfile_mesh = landmark_dir + ".ply"
-# mesh = io.read_obj_morf(infile, args.camera, args.texture)
-mesh = io.read_mesh_vtk(infile, args.texture, args.camera, scale = True)
 
+mesh = io.read_mesh_vtk(infile, args.texture, args.camera, scale = True)
+print("orig mesh loaded")
 landmarks = identify_3D_landmarks(mesh)
 
-atlas_mesh_file = '../morf/data/atlas.ply'
-atlas_landmark_file = '../morf/data/atlas_picked_points.txt' #/mnt/c/Users/David A/Documents/dsai_stuff/3d-utilities/autoLM/src/examples/
+atlas_mesh_file = '/srv/shiny-server/morf/data/atlas.ply'
+atlas_landmark_file = '/srv/shiny-server/morf/data/atlas_picked_points.txt'
 
 atlas_mesh = io.read_mesh_vtk(atlas_mesh_file, scale = False)
 atlas_landmarks = io.read_landmarks(atlas_landmark_file)
@@ -262,7 +265,7 @@ registered_mesh, registered_lms = alignment.affine_alignment(mesh[4], landmarks[
 #         )
 
 io.write_mesh_vtk(registered_mesh, outfile_mesh)
-io.save_landmarks(mesh[2], registered_lms, outfile)
+io.save_landmarks(1, registered_lms, outfile)
 
 if args.debug is False:
     display.stop()

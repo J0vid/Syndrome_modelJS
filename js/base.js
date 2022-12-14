@@ -153,6 +153,7 @@ selectedSyndrome2.onchange = function() {
 }
 
 var selectedSyndromeComp = document.getElementById("syndromeComp");
+
 selectedSyndromeComp.onchange = function() {
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
     if(comparisonScene.meshes.length > 0) comparisonScene.getMeshByName('__root__').dispose()
@@ -263,7 +264,7 @@ personalHeatmap.onchange = function() {
 document.getElementById("syndrome").value =  "Achondroplasia"
 document.getElementById("sexSlider").value = 0
 document.getElementById("sevSlider").value = 0
-document.getElementById("referenceComp").value = " "
+document.getElementById("referenceComp").value = "Non-syndromic"
 document.getElementById("syndromeComp").value = " "
 document.getElementById("submissionComp").value = " "
 document.getElementById("ageInput").value = "12"

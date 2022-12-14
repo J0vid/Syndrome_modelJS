@@ -6,6 +6,8 @@ library(promises)
 library(Morpho)
 library(Rvcg)
 library(sparsediscrim)
+library(RvtkStatismo)
+library(mesheR)
 future::plan("multicore")
 
 #set CORS parameters####
@@ -19,14 +21,14 @@ cors <- function(res) {
 }
 
 
-setwd("~/shiny/shinyapps/Syndrome_modelJS/")
-atlas2 <- file2mesh("~/whoami3.ply", readcol = T)
+# setwd("~/shiny/shinyapps/Syndrome_modelJS/")
+# atlas2 <- file2mesh("~/whoami3.ply", readcol = T)
 
 # save(atlas, d.meta.combined, front.face, PC.eigenvectors, synd.lm.coefs, synd.mshape, PC.scores, synd.mat, file = "data.Rdata")
-load("API/data.Rdata")
+load("/srv/shiny-server/API/data.Rdata")
 
-load("API/modules_400PCs.Rdata")
-eye.index <- as.numeric(read.csv("API/eye_small.csv", header = F)) +1 # eye.index <- as.numeric(read.csv("~/Desktop/eye_lms.csv", header = F)) +1
+load("/srv/shiny-server/API/modules_400PCs.Rdata")
+eye.index <- as.numeric(read.csv("/srv/shiny-server/API/eye_small.csv", header = F)) +1 # eye.index <- as.numeric(read.csv("~/Desktop/eye_lms.csv", header = F)) +1
 
 # load("texture_300PCs.Rdata")
 # texture.coefs <- lm(texture.pca$x[,1:300] ~ d.meta.combined$Sex + d.meta.combined$Age + d.meta.combined$Age^2 + d.meta.combined$Age^3 + d.meta.combined$Syndrome + d.meta.combined$Age:d.meta.combined$Syndrome)$coef
@@ -46,14 +48,18 @@ meta.lm <- lm(PC.scores[,1:num_pcs] ~ d.meta.combined$Sex + d.meta.combined$Age 
 synd.lm.coefs <- meta.lm$coefficients
 
 #initialize ssm variables
+
+atlas <- file2mesh("/srv/shiny-server/morf/data/atlas.ply")
+atlas.lms <- read.mpp("/srv/shiny-server/morf/data/atlas_picked_points.pp")
+
 # Kernels <- IsoKernel(0.1,atlas)
 # mymod <- statismoModelFromRepresenter(atlas, kernel = Kernels, ncomp = 100)
-atlas.lms <- read.mpp("../morf/data/atlas_picked_points.pp")
-
+# save(mymod, Kernels, file = "API/statismoStarter.Rdata")
+load("/srv/shiny-server/API/statismoStarter.Rdata")
 
 #calculations at startup that should make it into the startup file
 hdrda.df <- data.frame(synd = d.meta.combined$Syndrome, PC.scores[,1:200])
-hdrda.mod <- hdrda(synd ~ ., data = hdrda.df)
+hdrda.mod <- rda_high_dim(synd ~ ., data = hdrda.df)
 
 predshape.lm <- function(fit, datamod, PC, mshape){
   dims <- dim(mshape)
@@ -107,6 +113,13 @@ rotationM <- function(mat, thetaX, thetaY, thetaZ){
 }
 
 #* @apiTitle Syndrome model API
+
+#* Health check
+#* @get /
+#* @serializer unboxedJSON
+function() {
+  list(status = "OK")
+}
 
 #* generate atlasPC scores for each syndrome at a given age & sex
 #* @param selected.sex predicted sex effect
@@ -319,7 +332,7 @@ function(selected.sex = "Female", selected.age = 12, selected.synd = "Achondropl
 function(req, res) {
     multipart <- mime::parse_multipart(req)
     out_file <- multipart$test$datapath
-    # print(multipart)
+    print(multipart)
     print(out_file)
     ext <- paste0(".", tools::file_ext(multipart$test$name))
     #grab extension instead of hardcoding for obj or ply
@@ -327,20 +340,69 @@ function(req, res) {
     #debug check for mesh receipt: print(file2mesh(paste0(jsonlite::unbox(out_file), ".ply")))
     # rawMesh <- file2mesh(paste0(jsonlite::unbox(out_file), ext))
     
-    # system(paste0("/Users/jovid/opt/anaconda3/bin/python ../morf/LandmarkScan.py -i ", jsonlite::unbox(out_file), ext, " -o ../morf/out/testestest, -d True"))
-    # base64enc::base64encode(readBin(paste0("../morf/out/testestest.obj"), "raw", n = file.info(paste0("../morf/out/testestest.obj"))$size))
-    system(paste0("/Users/jovid/opt/anaconda3/bin/python ../morf/LandmarkScan.py -i ", jsonlite::unbox(out_file), ext, " -o ~/Downloads/testestest -d True"))
-    base64enc::base64encode(readBin(paste0("~/Downloads/testestest.obj"), "raw", n = file.info(paste0("~/Downloads/testestest.obj"))$size))
+    system(paste0("python3 /srv/shiny-server/morf/LandmarkScan.py -i ", jsonlite::unbox(out_file), ext, " -o /tmp/testestest"))
     
-    postDef <- posteriorDeform(mymod, tmp.fb, modlm = atlas.lms, samplenum = 1000)
+    # system(paste0("python ../morf/LandmarkScan.py -i ", jsonlite::unbox(out_file), ext, " -o ~/Downloads/testestest -d True"))
+    # base64enc::base64encode(readBin(paste0("~/Downloads/testestest.obj"), "raw", n = file.info(paste0("~/Downloads/testestest.obj"))$size))
+    # 
+   file.mesh <- tryCatch(
+        {
+          file.mesh <- file2mesh("/tmp/testestest.obj")
+          
+        },
+        error=function(cond) {
+          print("mesh wasn't readable, trying another way")
+            file.mesh <- rgl::readOBJ("/tmp/testestest.obj")
+
+            # Choose a return value in case of error
+            return(file.mesh)
+        }
+    )  
+    
+    file.lms <- read.table("/tmp/testestest.txt")
+
+    #clean up
+    file.remove("/tmp/testestest.obj")
+    
+    # library(rgl)
+    # plot3d(file.mesh, aspect = "iso", alpha = .3)
+    # text3d(file.lms, col = 3, texts = 1:13)
+    # spheres3d(file.lms, col = 3, radius = 4)
+    # rglwidget()
+    
+    tmp.fb <- rotmesh.onto(file.mesh, refmat = as.matrix(file.lms), tarmat = as.matrix(atlas.lms), scale = T, reflection = T)
+    gp.fb <- tmp.fb$yrot
+    
+    tmp.fb <- tmp.fb$mesh
+    
+    # debug
+    # library(rgl)
+    # plot3d(tmp.fb, aspect = "iso", alpha = .3)
+    # shade3d(atlas, col = 4)
+    # spheres3d(atlas.lms, col = 2)
+    # spheres3d(gp.fb, col = 3)
+    # rglwidget()
+
+    postDef <- posteriorDeform(mymod, tmp.fb, modlm = atlas.lms, samplenum = 2000)
     print("rigid registration")
     for(i in 1:3) postDef <- posteriorDeform(mymod, tmp.fb, modlm = atlas.lms, tarlm = gp.fb, samplenum = 1000, reference = postDef)
+    # icpMesh <- icpmat(t(tmp.fb$vb[-4,]), t(atlas$vb[-4,]), iterations = 10)
+    # tmp.fb$vb[-4,] <- t(icpMesh)
+    # postDef <- posteriorDeform(mymod, tmp.fb, modlm = atlas.lms, samplenum = 2000)
+    
     print("non-linear registration")
     postDefFinal <- postDef
-    postDefFinal <- posteriorDeform(mymod, tmp.fb, modlm=atlas.lms, samplenum = 3000, reference = postDefFinal, deform = T, distance = 3)
+    for(i in 1:3) postDefFinal <- posteriorDeform(mymod, tmp.fb, modlm=atlas.lms, samplenum = 3000, reference = postDefFinal, deform = T, distance = 3)
     print("wanle~~~")
+    
+    # plot3d(tmp.fb, aspect = "iso", alpha = .3)
+    # shade3d(postDefFinal, col = 4)
+    # rglwidget()
+    
     #currently bugged and writes to home directory
-    # mesh2obj(postDefFinal, "/Users/jovid/Downloads/cube.obj")
+    vcgObjWrite(postDefFinal, "/tmp/postDefFinal.obj", writeNormals = T)
+    base64enc::base64encode(readBin(paste0("/tmp/postDefFinal.obj"), "raw", n = file.info(paste0("/tmp/postDefFinal.obj"))$size))
+    
 }
 
 # 
@@ -376,21 +438,39 @@ function(req, res) {
 # }
 
 #* generate syndrome classifier prediction
+#* @get /getNormals
+function(){
+
+  jtemp <- file2mesh("/tmp/postDefFinal.obj")
+  return(as.numeric(jtemp$normals[-4,]))
+  
+}
+
+
+#* generate syndrome classifier prediction
 #* @get /classifyMesh
 function(selected.sex = "Female", selected.age = 12){
   tmp.mesh <- atlas
-  jtemp <- file2mesh("~/shiny/shinyapps/Syndrome_model/da_reg.ply")
+  
+  jtemp <- file2mesh("/tmp/postDefFinal.obj")
+
   sample1k <- sample(1:27903, 1000)
   
   jtemp <- rotmesh.onto(jtemp, t(jtemp$vb[-4, sample1k]), synd.mshape[sample1k,], scale = T)$mesh
   
-  projected.mesh <- getPCscores(t(jtemp$vb[-4,]), PC.eigenvectors, synd.mshape)[1:200]
+  icpMesh <- icpmat(t(jtemp$vb[-4,]), synd.mshape, iterations = 10)
+  
+  # plot3d(icpMesh, aspect = "iso")
+  # points3d(synd.mshape, col = 2)
+  # rglwidget()
+  
+  projected.mesh <- matrix(getPCscores(icpMesh, PC.eigenvectors, synd.mshape)[1:200], nrow = 1)
   # projected.mesh <- getPCscores(t(registered.mesh$vb[-4,]), PC.eigenvectors, synd.mshape)[1:200]
   
   #classify individual's scores using the model
-  # colnames(projected.mesh) <- colnames(PC.scores)
+  colnames(projected.mesh) <- colnames(PC.scores)
   
-  posterior.distribution <- predict(hdrda.mod, newdata = projected.mesh, type = "prob")$post
+  posterior.distribution <- predict(hdrda.mod, newdata = as.data.frame(projected.mesh), type = "prob")
   
   posterior.distribution <- sort(posterior.distribution, decreasing = T)
   
