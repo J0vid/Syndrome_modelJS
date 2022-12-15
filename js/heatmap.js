@@ -193,9 +193,9 @@ function updateHeatmap(tmpValue) {
 function personalHeatmap() {
 
    //need vertices of inputMesh and comparisonMesh as well as normals of inputMesh
-    x = submissionScene.meshes[3].getVerticesData('position')
-    startNormals = submissionScene.meshes[3].getVerticesData('normal')
-    y = submissionScene.meshes[1].getVerticesData('position')
+    x = submissionScene.meshes[1].getVerticesData('position')
+    startNormals = submissionScene.meshes[1].getVerticesData('normal')
+    y = submissionScene.meshes[2].getVerticesData('position') //this is a glb with a root mesh
 
     //calculate diffs between meshes
     diff_mesh_raw = [];
@@ -253,7 +253,7 @@ function personalHeatmap() {
     }
     // console.log(colors)
 
-    return(submissionScene.meshes[1].setVerticesData(BABYLON.VertexBuffer.ColorKind, colors))
+    return(submissionScene.meshes[0].setVerticesData(BABYLON.VertexBuffer.ColorKind, colors))
 
 }               
 

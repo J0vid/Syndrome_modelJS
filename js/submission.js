@@ -40,3 +40,12 @@ submissionEngine.runRenderLoop(function () {
     submissionScene.render();
 });
 
+//personal heatmap
+var personalHeatmap = document.getElementById("submissionComp");
+personalHeatmap.onchange = function() {
+    if(document.getElementById("Submitted-tab").className === 'nav-link active') {
+        updatePersonalHeatmap(submissionScene.meshes[1], submissionScene.meshes[3]);
+    } 
+}
+
+

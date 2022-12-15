@@ -5,6 +5,11 @@ assets/
 Syndrome_model_raw_meshes/
 obfuscation/
 out/
+.rstudio/
+.config/
+.local/
+*.pyc
+*.rdata
 
 # Logs
 logs
