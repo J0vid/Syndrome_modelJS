@@ -400,6 +400,7 @@ function(req, res) {
     # rglwidget()
     
     #currently bugged and writes to home directory
+    postDefFinal$vb[-4,] <- (postDefFinal$vb[-4,]/cSize(postDefFinal)) * 2e4
     vcgObjWrite(postDefFinal, "/tmp/postDefFinal.obj", writeNormals = T)
     base64enc::base64encode(readBin(paste0("/tmp/postDefFinal.obj"), "raw", n = file.info(paste0("/tmp/postDefFinal.obj"))$size))
     

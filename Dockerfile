@@ -19,23 +19,23 @@ RUN sudo apt update
 RUN sudo apt install -y statismo-dev
 
 # install R packages required
-RUN R -e "install.packages('devtools', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('devtools')"
 RUN R -e "devtools::install_github('zarquon42b/RvtkStatismo',ref='develop')"
 RUN R -e "devtools::install_github('zarquon42b/mesheR')"
-RUN R -e "install.packages('geomorph', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('Morpho', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('Rvcg', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('future', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('promises', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('geomorph')"
+RUN R -e "install.packages('Morpho')"
+RUN R -e "install.packages('Rvcg')"
+RUN R -e "install.packages('future')"
+RUN R -e "install.packages('promises')"
 RUN R -e "devtools::install_github('j0vid/Jovid')"
-RUN R -e "install.packages('sparsediscrim', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinyBS', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinycssloaders', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('plotly', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('ggrepel', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('grid', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('visNetwork', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('shinydashboard', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('sparsediscrim')"
+RUN R -e "install.packages('shinyBS')"
+RUN R -e "install.packages('shinycssloaders')"
+RUN R -e "install.packages('plotly')"
+RUN R -e "install.packages('ggrepel')"
+RUN R -e "install.packages('grid')"
+RUN R -e "install.packages('visNetwork')"
+RUN R -e "install.packages('shinydashboard')"
     
 RUN pip3 install --upgrade pip
 #python packages
@@ -54,14 +54,6 @@ RUN rstudio-server start
 
 RUN R -e "install.packages('Morpho')"
 
-# # install R packages required
-# RUN R -e "install.packages('devtools')"
-# RUN R -e "devtools::install_github("zarquon42b/RvtkStatismo",ref="develop")"
-# RUN R -e "devtools::install_github('dmurdoch/rgl')"
-# RUN R -e "install.packages('future', repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('promises', repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('Morpho', repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('geomorph', repos='http://cran.rstudio.com/')"
 ENV SHINY_SERVER_VERSION 1.5.14.948
 RUN /rocker_scripts/install_shiny_server.sh
 EXPOSE 3838
@@ -71,18 +63,7 @@ COPY ./API/startup.R /var
 COPY ./API/ /srv/shiny-server/API
 COPY ./container-initialization.sh /var
 
-
-# COPY . /srv/shiny-server/
-
-# ENTRYPOINT ["R", "-f", "/var/startup.R", "--slave"] #breaks rstudio/shiny
 RUN ["chmod", "+x", "/var/startup.R"]
 RUN ["chmod", "+x", "/var/container-initialization.sh"]
 
 CMD ["/var/container-initialization.sh"]
-# CMD ["/var/startup.R"]
-# RUN ["R", "-f", "/var/startup.R", "--slave"] #breaks rstudio/shiny
-
-
-# CMD ["/srv/shiny-server/API/plumber.R"]
-
-

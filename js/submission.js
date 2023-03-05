@@ -40,11 +40,41 @@ submissionEngine.runRenderLoop(function () {
     submissionScene.render();
 });
 
+//load personal heatmap comparison mesh
+// var selectedSyndromeComp = document.getElementById("syndromeComp");
+
+// selectedSyndromeComp.onchange = function() {
+   
+//         // if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
+//         //     throttledHeatmap();
+//         // } 
+//     }) //end loader
+  
+// }
+
 //personal heatmap
 var personalHeatmap = document.getElementById("submissionComp");
 personalHeatmap.onchange = function() {
     if(document.getElementById("Submitted-tab").className === 'nav-link active') {
-        updatePersonalHeatmap(submissionScene.meshes[1], submissionScene.meshes[3]);
+        if(submissionScene.meshes.length > 1) submissionScene.getMeshByName('__root__').dispose()
+    
+        subCompMesh = BABYLON.SceneLoader.ImportMesh("", "./assets/", document.getElementById("submissionComp").value + ".glb", submissionScene, function (meshes) {
+            compInfluence = submissionScene.getMeshByName(document.getElementById("submissionComp").value).morphTargetManager.getTarget(1);    
+            ageInputValue = parseInt(document.getElementById("ageInput").value)
+            //get age range
+            minAge = parseInt(compInfluence.name.split("_")[1])
+            maxAge = parseInt(compInfluence.name.split("_")[2])
+            ageRange = maxAge - minAge
+            //express influence relative to morphtarget range
+            compInfluence.influence = (ageInputValue - minAge)/ageRange
+
+            compSexInfluence = submissionScene.getMeshByName(document.getElementById("submissionComp").value).morphTargetManager.getTarget(2);    
+            if(document.getElementById("submissionComp").value === "Female") compSexInfluence.influence = -2
+            if(document.getElementById("submissionComp").value === "Male") compSexInfluence.influence = 2
+            // submissionScene.getMeshByName(document.getElementById("submissionComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
+            updatePersonalHeatmap(refMesh = submissionScene.meshes[0], compMesh = meshes[1]);
+        })//end loader
+        
     } 
 }
 

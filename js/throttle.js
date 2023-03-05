@@ -25,5 +25,5 @@ function throttle(cb, delay = 500) {
 }
 
 const throttledHeatmap = throttle(() => {
-    updateHeatmap(tmpValue)
-          }, 33)
+  updateHeatmap(tmpValue)
+}, 33)

@@ -21,6 +21,8 @@ const createScene1 = function () {
 
     const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 0, 100));
     const light2 = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(40, 40, 100));
+    light.specular = new BABYLON.Color3(0, 0, 0);
+    light2.specular = new BABYLON.Color3(0, 0, 0);
 
     return scene1;
 };
@@ -52,6 +54,12 @@ selectedSyndrome2.onchange = function() {
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
 
+        //set masculinity to neutral
+        comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(2).influence = -1;
+
+        //get rid of skin material
+        meshes[1].material.dispose()
+
         if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
             updateHeatmap();
         } 
@@ -62,6 +70,7 @@ selectedSyndrome2.onchange = function() {
         compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
+        comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(2).influence = -1;
 
         if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
             updateHeatmap();
@@ -87,6 +96,11 @@ selectedSyndromeComp.onchange = function() {
         //set influence starting value to reset slider
         refInfluence.influence = document.getElementById("compAgeSlider").value/100
 
+        comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(2).influence = -1;
+
+        //get rid of skin material
+        meshes[1].material.dispose()
+
         if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
             updateHeatmap();
         } 
@@ -96,7 +110,8 @@ selectedSyndromeComp.onchange = function() {
         compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(1);    
         compInfluence.influence = document.getElementById("compAgeSlider").value/100
         comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).setEnabled(false) //need to call by id, otherwise I'm disable scene when ref === comp
-        
+        comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(2).influence = -1;
+
         if(document.getElementById("Comparisons-tab").className === 'nav-link active') {
             throttledHeatmap();
         } 
@@ -116,17 +131,20 @@ compSlider.oninput = function() {
     } 
 }
 
+//initial loading of reference mesh
 refMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("referenceComp").value + ".glb", comparisonScene, function (meshes) {
-    
+
     refInfluence = comparisonScene.getMeshByName(document.getElementById("referenceComp").value).morphTargetManager.getTarget(0);
+      //get rid of skin material
+      meshes[1].material.dispose()
 }) //end loader
 
-compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
+// compMesh = BABYLON.SceneLoader.ImportMesh("", "assets/", document.getElementById("syndromeComp").value + ".glb", comparisonScene, function (meshes) {
     
-    //comparisonScene.getMeshByName(document.getElementById("syndromeComp")).setEnabled(false)
+//     //comparisonScene.getMeshByName(document.getElementById("syndromeComp")).setEnabled(false)
 
-compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
+// compInfluence = comparisonScene.getMeshByName(document.getElementById("syndromeComp").value).morphTargetManager.getTarget(0);
 
-}) //end loader
+// }) //end loader
 
 
